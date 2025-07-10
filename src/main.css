@@ -1,68 +1,206 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --lite-red: #fc4e4e;
+  --red: #f50000;
+  --dark-red: #d42d18;
+  --lite-orange: #feac31;
+  --orange: #ef9104;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+  background-color: #f5f5f5;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  margin: 0 auto;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.main-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.display-column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-up-arrow {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  z-index: 7;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+@font-face {
+  font-family: "Archivo";
+  src: url("./ArchivoBlack-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Protest";
+  src: url("./ProtestRiot-Regular.ttf") format("woff2");
+  font-weight: 1 999;
+  font-stretch: 75% 125%;
+  font-style: normal;
+}
+.archivo-font {
+  font-family: "Outfit", sans-serif;
+}
+.archivo-thin-font {
+  font-family: "Outfit", sans-serif;
+  font-weight: 400;
+}
+.archivo-xthin-font {
+  font-family: "Outfit", sans-serif;
+  font-weight: 200;
+}
+.protest-font {
+  font-family: "Protest";
+  font-weight: 800;
+}
+.protest-thin-font {
+  font-family: "Protest";
+  font-weight: 400;
+}
+
+.red-bg {
+  background-color: var(--red);
+}
+.orange-bg {
+  background-color: var(--orange);
+}
+
+.ro-gradient {
+  background: linear-gradient(to right, red 0%, orange 100%);
+}
+.dark-silver-bg {
+  background-color: #656565;
+}
+
+.silver-bg {
+  background-color: #d9d9d9;
+}
+
+.charcoal-bg {
+  background-color: #181818;
+}
+
+.off-white-bg {
+  background-color: #f5f5f5;
+}
+
+.grey-gradient-bg {
+  background: linear-gradient(
+    to bottom,
+    #f5f5f5 81%,
+    #c2c2c2 97%,
+    #8f8f8f 100%
+  );
+}
+.dark-grey-gradient-bg {
+  background: linear-gradient(
+    to bottom,
+    rgb(215, 215, 215) 21%,
+    #a5a5a5 87%,
+    #878787 100%
+  );
+}
+.white-gradient-bg {
+  background: linear-gradient(
+    to bottom,
+    #ffffff 10%,
+    #c2c2c2 97%,
+    #8f8f8f 100%
+  );
+}
+
+.lite-orange-text {
+  color: var(--lite-orange);
+}
+.orange-text {
+  color: var(--orange);
+}
+
+.red-text {
+  color: var(--red);
+}
+
+.white-text {
+  color: #ffffff;
+}
+
+.silver-text {
+  color: #a1a1a1;
+}
+.d-silver-text {
+  color: #636262;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.charcoal-text {
+  color: #202020;
+}
+
+.flex {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.flex-even {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.padding-40 {
+  padding: 40px;
+}
+.padding-20 {
+  padding: 10px;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.neg-marg {
+  margin-top: -1px;
 }
