@@ -1,9 +1,9 @@
 :root {
-  --lite-red: #fc4e4e;
-  --red: #f50000;
-  --dark-red: #d42d18;
-  --lite-orange: #feac31;
-  --orange: #ef9104;
+  --dark-blue: #0b0c2a;
+  --neon-blue: #0bf0ff;
+  --yellow: #ffe459;
+  --lite-dark-blue: #050622;
+  --purple: #f014ff;
 }
 
 * {
@@ -13,7 +13,7 @@
 }
 
 body {
-  background-color: #f5f5f5;
+  background-color: var(--dark-blue);
   display: flex;
   flex-direction: column;
   margin: 0 auto;
