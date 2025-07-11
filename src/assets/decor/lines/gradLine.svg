@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="176.25787mm"
+   height="12.648348mm"
+   viewBox="0 0 176.25787 12.648348"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm" /><defs
+     id="defs1"><linearGradient
+       id="linearGradient2"
+       inkscape:collect="always"><stop
+         style="stop-color:#0060d0;stop-opacity:0;"
+         offset="0"
+         id="stop2" /><stop
+         style="stop-color:#0060d0;stop-opacity:1;"
+         offset="0.59016395"
+         id="stop3" /></linearGradient><linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2"
+       id="linearGradient4"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,0.66644107,-7.572548,17.735387)"
+       x1="55.083054"
+       y1="113.30601"
+       x2="197.37486"
+       y2="112.80679" /></defs><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-21.087142,-131.86419)"><path
+       id="rect1-1"
+       style="fill:url(#linearGradient4);stroke:#ffffff;stroke-width:0;stroke-linejoin:round"
+       d="M 21.087141,131.8642 H 197.34502 l -17.34033,12.64835 H 21.087141 Z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="gradLine.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" /></g></svg>

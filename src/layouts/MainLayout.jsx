@@ -15,27 +15,31 @@ export function MainLayout() {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  //   useEffect(() => {
-  //     async function fetchClasses() {
-  //       try {
-  //         const querySnapshot = await getDocs(collection(db, "class"));
-  //         const data = querySnapshot.docs.map((doc) => ({
-  //           ...doc.data(),
-  //           id: doc.id,
-  //         }));
-  //         setClasses(data);
-  //       } catch (err) {
-  //         console.error("Error loading classes:", err);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     }
-  //     fetchClasses();
-  //   }, []);
+  useEffect(() => {
+    async function fetchClasses() {
+      try {
+        // const querySnapshot = await getDocs(collection(db, "class"));
+        // const data = querySnapshot.docs.map((doc) => ({
+        //   ...doc.data(),
+        //   id: doc.id,
+        // }));
+        // setClasses(data);
+      } catch (err) {
+        console.error("Error loading classes:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchClasses();
+  }, []);
 
-  //   if (state === "loading" || loading) {
-  //     return <Loader />; // 👈 Only show loader until both route & data are ready
-  //   }
+  if (state === "loading" || loading) {
+    return (
+      <div className="loader-container">
+        <Loader />
+      </div>
+    ); // 👈 Only show loader until both route & data are ready
+  }
 
   return (
     <InfoContext.Provider value={classes}>

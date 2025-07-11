@@ -1,19 +1,16 @@
-import { useEffect, useState, useCallback, useRef } from "react";
-// import { collection, getDocs } from "firebase/firestore";
-import { scrollToSection } from "../SmoothScroll";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Hamburger } from "../Hamburger/Hamburger";
-// import { db } from "../../firebaseConfig";
-import logo from "../../assets/logo/NBDLogo.png";
-import fb from "../../assets/icons/functIcons/facebook-logo.png";
-import insta from "../../assets/icons/functIcons/instagram.png";
+import { NavPhone } from "./NavP/NavPhone";
+import { NavDesktop } from "./NavD/NavDesktop";
+import { scrollToSection } from "../SmoothScroll";
+import navDecor from "../../assets/decor/imgs/nav-decor.svg";
+import navDecorLine from "../../assets/decor/lines/gradLine.svg";
 import gsap from "gsap";
 import "./nav.css";
 
 export function Nav() {
   const [hoverIndex, setHoverIndex] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  //Phone States
   const [isHamburgerActive, setIsHamburgerActive] = useState(null);
   const [isAnimationActive, setIsAnimtionActive] = useState(null);
   const navigate = useNavigate();
@@ -25,19 +22,41 @@ export function Nav() {
     { linkName: "Contact", link: "#footer" },
   ];
 
-  const handleMouseEnter = useCallback((index) => {
-    setHoverIndex(index);
-  }, []);
+  const handleMouseEnter = useCallback((index) => setHoverIndex(index), []);
+  const handleMouseLeave = useCallback(() => setHoverIndex(null), []);
 
-  const handleMouseLeave = useCallback(() => {
-    setHoverIndex(null);
-  }, []);
+  function handleActivateHamburger() {
+    if (!isHamburgerActive) {
+      setIsHamburgerActive(true);
+      setIsAnimtionActive(true);
+    } else {
+      setIsAnimtionActive(false);
+      gsap.to(".navbar-phone-dropdown-container", {
+        x: "-100%",
+        duration: 1.2,
+        ease: "power4.in",
+        onComplete: () => setIsHamburgerActive(false),
+      });
+    }
+  }
+
+  function handleScrollTo(link) {
+    if (isHamburgerActive) {
+      if (link === "#footer") {
+        handleActivateHamburger();
+        setTimeout(() => scrollToSection(link), 1300);
+      } else {
+        navigate(link);
+        handleActivateHamburger();
+      }
+    } else {
+      link === "#footer" ? scrollToSection(link) : navigate(link);
+    }
+  }
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
-
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -51,43 +70,6 @@ export function Nav() {
       });
     }
   }, [hoverIndex]);
-
-  function handleActivateHamburger() {
-    if (!isHamburgerActive) {
-      setIsHamburgerActive(true);
-      setIsAnimtionActive(true);
-    } else if (isHamburgerActive) {
-      setIsAnimtionActive(false);
-      gsap.to(".navbar-phone-dropdown-container", {
-        x: "-100%",
-        duration: 1.2,
-        ease: "power4.in",
-        onComplete: () => {
-          setIsHamburgerActive(false);
-        },
-      });
-    }
-  }
-
-  function handleScrollTo(link) {
-    if (isHamburgerActive) {
-      if (link === "#footer") {
-        handleActivateHamburger();
-        setTimeout(() => {
-          scrollToSection(link);
-        }, 1300);
-      } else {
-        navigate(link);
-        handleActivateHamburger();
-      }
-    } else {
-      if (link === "#footer") {
-        scrollToSection(link);
-      } else {
-        navigate(link);
-      }
-    }
-  }
 
   useEffect(() => {
     if (isHamburgerActive) {
@@ -103,66 +85,33 @@ export function Nav() {
   }, [isHamburgerActive]);
 
   return (
-    <nav id="nav" className="nav-main-container charcoal-bg ">
+    <nav id="nav" className="nav-main-container">
       <div className="nav-overflow-container">
         {windowWidth <= 900 ? (
-          <>
-            <div className="logo-ham-container">
-              <div className="logo">
-                <img
-                  src={logo}
-                  onClick={() => {
-                    navigate("/"), setHoverIndex(0);
-                  }}
-                />
-              </div>
-              <div
-                className="nav-hamburger-container "
-                onClick={() => handleActivateHamburger()}
-              >
-                <Hamburger isOpened={isAnimationActive} />
-              </div>
-            </div>
-          </>
+          <NavPhone
+            navigate={navigate}
+            handleActivateHamburger={handleActivateHamburger}
+            isAnimationActive={isAnimationActive}
+          />
         ) : (
-          <>
-            <div className="logo-links">
-              <img
-                src={logo}
-                onClick={() => {
-                  navigate("/"), setHoverIndex(0);
-                }}
-              />
-              <div className="links">
-                {links.map((link, index) => (
-                  <div
-                    onMouseEnter={() => handleMouseEnter(index)}
-                    onMouseLeave={handleMouseLeave}
-                    onClick={() => handleScrollTo(link.link)}
-                    key={link.linkName}
-                    className="link-container"
-                  >
-                    <h1 className="archivo-font">{link.linkName}</h1>
-                    {hoverIndex === index && <div className="active"></div>}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="socials ">
-              <img src={fb} />
-              <img src={insta} />
-            </div>
-          </>
+          <NavDesktop
+            links={links}
+            hoverIndex={hoverIndex}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            handleScrollTo={handleScrollTo}
+            navigate={navigate}
+          />
         )}
       </div>
+
       {isHamburgerActive && (
         <div className="navbar-phone-dropdown-container charcoal-bg">
           <div className="dropdown-links-container">
             {links.map((link, index) => (
               <div key={link.linkName}>
                 <h3
-                  className="archivo-font dropdown-link-name "
+                  className="archivo-font dropdown-link-name"
                   onClick={() => {
                     handleMouseEnter(index);
                     handleScrollTo(link.link);
@@ -176,6 +125,11 @@ export function Nav() {
           </div>
         </div>
       )}
+      <div className="tech-decor-container">
+        <img src={navDecor} className="tech-decor" />{" "}
+        <img src={navDecorLine} className="tech-decor-line" />
+        <img src={navDecorLine} className="tech-decor-line-right" />
+      </div>
     </nav>
   );
 }

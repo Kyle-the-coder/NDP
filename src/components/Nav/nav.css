@@ -1,7 +1,7 @@
 .nav-main-container {
   width: 100%;
-  height: 200px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   z-index: 9;
@@ -10,7 +10,7 @@
 .nav-overflow-container {
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -49,18 +49,71 @@
 
 .logo-links {
   width: 100%;
-  height: 85%;
-
+  height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   z-index: 2;
+  position: relative;
 }
 
 .logo-links img {
-  width: 150px;
+  width: 300px;
   height: auto;
   cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.shine {
+  width: 120px; /* wider */
+  height: 60px; /* shorter for ellipse shape */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.568) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.space-decor {
+  width: 300px;
+  position: absolute;
+  top: 0px;
+}
+
+.tech-decor-container {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin-top: -20px;
+}
+
+.tech-decor {
+  width: 100%;
+}
+
+.tech-decor-line {
+  width: 20%;
+  position: absolute;
+  left: 0px;
+}
+.tech-decor-line-right {
+  width: 20%;
+  position: absolute;
+  right: 0px;
+  transform: scaleX(-1);
+}
+.roto {
+  right: 0px;
+  transform: scaleX(-1);
 }
 
 .links {
@@ -68,7 +121,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem;
+  gap: 4rem;
 }
 .link-container {
   width: fit-content;
@@ -77,19 +130,20 @@
 }
 
 .link-container:hover {
-  color: var(--lite-orange);
+  color: var(--yellow);
 }
 
 .links h1 {
   cursor: pointer;
   font-size: 2rem;
   transition: all 0.3s;
+  height: 90%;
 }
 
 .active {
   width: 100%;
-  height: 2px;
-  background-color: var(--red);
+  height: 3px;
+  background-color: var(--yellow);
 }
 
 .socials {

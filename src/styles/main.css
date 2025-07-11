@@ -1,5 +1,5 @@
 :root {
-  --dark-blue: #0b0c2a;
+  --dark-blue: hsl(224, 100%, 8%);
   --neon-blue: #0bf0ff;
   --yellow: #ffe459;
   --lite-dark-blue: #050622;
@@ -47,10 +47,14 @@ body {
 
 .loader-container {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.marg100 {
+  margin-top: 100px;
 }
 
 @font-face {
