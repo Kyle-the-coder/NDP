@@ -25,7 +25,6 @@ body {
   flex-direction: column;
   margin: 0 auto;
   position: relative;
-  overflow-x: hidden;
 }
 
 .display-column {
@@ -46,47 +45,45 @@ body {
   cursor: pointer;
 }
 
+.loader-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @font-face {
-  font-family: "Archivo";
-  src: url("./ArchivoBlack-Regular.ttf") format("truetype");
+  font-family: "Bebas";
+  src: url("./BebasNeue-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: "Protest";
-  src: url("./ProtestRiot-Regular.ttf") format("woff2");
+  font-family: "Urban";
+  src: url("./Urbanist-VariableFont_wght.ttf") format("woff2");
   font-weight: 1 999;
   font-stretch: 75% 125%;
   font-style: normal;
 }
-.archivo-font {
-  font-family: "Outfit", sans-serif;
+.bebas-font {
+  font-family: "Bebas", sans-serif;
 }
-.archivo-thin-font {
-  font-family: "Outfit", sans-serif;
+.bebas-thin-font {
+  font-family: "Bebas", sans-serif;
   font-weight: 400;
 }
-.archivo-xthin-font {
-  font-family: "Outfit", sans-serif;
+.bebas-xthin-font {
+  font-family: "Bebas", sans-serif;
   font-weight: 200;
 }
-.protest-font {
-  font-family: "Protest";
+.urban-font {
+  font-family: "Urban";
   font-weight: 800;
 }
-.protest-thin-font {
-  font-family: "Protest";
+.urban-thin-font {
+  font-family: "Urban";
   font-weight: 400;
 }
 
-.red-bg {
-  background-color: var(--red);
-}
-.orange-bg {
-  background-color: var(--orange);
-}
-
-.ro-gradient {
-  background: linear-gradient(to right, red 0%, orange 100%);
-}
 .dark-silver-bg {
   background-color: #656565;
 }
@@ -128,26 +125,12 @@ body {
   );
 }
 
-.lite-orange-text {
-  color: var(--lite-orange);
-}
-.orange-text {
-  color: var(--orange);
-}
-
-.red-text {
-  color: var(--red);
+.blue-text {
+  color: var(--neon-blue);
 }
 
 .white-text {
-  color: #ffffff;
-}
-
-.silver-text {
-  color: #a1a1a1;
-}
-.d-silver-text {
-  color: #636262;
+  color: white;
 }
 
 .no-scroll {
@@ -156,49 +139,6 @@ body {
 
 .charcoal-text {
   color: #202020;
-}
-
-.flex {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.text-underline {
-  text-decoration: underline;
-}
-
-.column {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-between {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.flex-even {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.padding-40 {
-  padding: 40px;
-}
-.padding-20 {
-  padding: 10px;
-}
-
-.pos-relative {
-  position: relative;
 }
 
 .neg-marg {

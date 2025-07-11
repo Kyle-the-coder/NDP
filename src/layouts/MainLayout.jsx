@@ -1,6 +1,6 @@
 import { Outlet, useNavigation } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
-// import { Nav } from "../components/Nav/Nav";
+import { Nav } from "../components/Nav/Nav";
 // import { Footer } from "../components/Footer/Footer";
 // import upArrow from "../assets/icons/ogUpArrow.png";
 // import { scrollToSection } from "../components/SmoothScroll";
@@ -8,6 +8,7 @@ import { Suspense, useEffect, useState } from "react";
 // import { db } from "../firebaseConfig";
 // import { collection, getDocs } from "firebase/firestore";
 import { InfoContext } from "../contexts/infoContext";
+import { Loader } from "../components/Loader/Loader";
 
 export function MainLayout() {
   const { state } = useNavigation();
@@ -38,14 +39,20 @@ export function MainLayout() {
 
   return (
     <InfoContext.Provider value={classes}>
-      <div className="main-container silver-bg">
+      <div className="main-container white-text">
         {/* <img
           src={upArrow}
           className="main-up-arrow"
           onClick={() => scrollToSection("#nav")}
         /> */}
-        {/* <Nav /> */}
-        <Suspense fallback={<h1>Loader</h1>}>
+        <Nav />
+        <Suspense
+          fallback={
+            <div className="loader-container">
+              <Loader />
+            </div>
+          }
+        >
           <Outlet />
         </Suspense>
         {/* <Footer /> */}

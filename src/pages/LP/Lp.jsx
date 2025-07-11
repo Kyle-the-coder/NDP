@@ -1,3 +1,10 @@
+import { Loader } from "../../components/Loader/Loader";
+import "./lp.css";
+
 export default function Lp() {
-  return <h1 className="display-column">Landing page</h1>;
+  return (
+    <section className="display-column">
+      <h1>landing page</h1>
+    </section>
+  );
 }
