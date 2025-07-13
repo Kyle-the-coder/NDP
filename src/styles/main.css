@@ -62,6 +62,10 @@ body {
   src: url("./BebasNeue-Regular.ttf") format("truetype");
 }
 @font-face {
+  font-family: "Anton";
+  src: url("./Anton-Regular.ttf") format("truetype");
+}
+@font-face {
   font-family: "Urban";
   src: url("./Urbanist-VariableFont_wght.ttf") format("woff2");
   font-weight: 1 999;
@@ -77,6 +81,17 @@ body {
 }
 .bebas-xthin-font {
   font-family: "Bebas", sans-serif;
+  font-weight: 200;
+}
+.anton-font {
+  font-family: "Anton", sans-serif;
+}
+.anton-thin-font {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+}
+.anton-xthin-font {
+  font-family: "Anton", sans-serif;
   font-weight: 200;
 }
 .urban-font {
@@ -133,6 +148,9 @@ body {
   color: var(--neon-blue);
 }
 
+.purple-text {
+  color: var(--purple);
+}
 .white-text {
   color: white;
 }
@@ -151,4 +169,10 @@ body {
 
 .letter-space {
   letter-spacing: 3px;
+}
+
+.border {
+  width: 100%;
+  margin-top: -20px;
+  z-index: 3;
 }

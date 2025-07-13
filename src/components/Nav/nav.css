@@ -67,8 +67,8 @@
 }
 
 .shine {
-  width: 120px; /* wider */
-  height: 60px; /* shorter for ellipse shape */
+  width: 120px;
+  height: 60px;
   background: radial-gradient(
     ellipse at center,
     rgba(255, 255, 255, 0.568) 0%,
