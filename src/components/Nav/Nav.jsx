@@ -106,12 +106,12 @@ export function Nav() {
       </div>
 
       {isHamburgerActive && (
-        <div className="navbar-phone-dropdown-container charcoal-bg">
+        <div className="navbar-phone-dropdown-container ">
           <div className="dropdown-links-container">
             {links.map((link, index) => (
               <div key={link.linkName}>
                 <h3
-                  className="archivo-font dropdown-link-name"
+                  className="bebas-thin-font letter-space dropdown-link-name"
                   onClick={() => {
                     handleMouseEnter(index);
                     handleScrollTo(link.link);

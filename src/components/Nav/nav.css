@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   z-index: 9;
 }
@@ -12,6 +12,7 @@
   height: 100%;
   padding: 10px 20px;
   display: flex;
+  background-color: var(--dark-blue);
   justify-content: space-between;
   align-items: flex-start;
   z-index: 9;
@@ -62,7 +63,7 @@
   width: 300px;
   height: auto;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .shine {
@@ -93,9 +94,16 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  margin-top: -20px;
+  z-index: 999;
 }
 
+.tech-decor,
+.tech-decor-line,
+.tech-decor-line-right {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
 .tech-decor {
   width: 100%;
 }
@@ -200,9 +208,7 @@
 
 @media only screen and (max-width: 900px) {
   .nav-main-container {
-    flex-direction: column;
-    align-items: center;
-    height: 130px;
+    height: 150px;
   }
 
   .logo-ham-container {
@@ -210,6 +216,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .nav-overflow-container {
+    height: 100%;
   }
   .navbar-phone-dropdown-container {
     width: 100%;
@@ -224,6 +233,7 @@
     left: 0;
     overflow: hidden;
     z-index: 999;
+    background-color: var(--dark-blue);
   }
 
   .logo {

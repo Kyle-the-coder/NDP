@@ -148,3 +148,7 @@ body {
 .neg-marg {
   margin-top: -1px;
 }
+
+.letter-space {
+  letter-spacing: 3px;
+}

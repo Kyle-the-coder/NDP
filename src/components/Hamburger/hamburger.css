@@ -16,17 +16,8 @@ svg {
   height: 60px;
   border: none;
 }
-
 .line {
-  stroke: var(--red);
-  stroke-width: 10;
-  stroke-dasharray: 80;
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.7s ease-in-out;
-}
-
-.line {
-  stroke: var(--red);
+  stroke: var(--neon-blue);
   stroke-width: 10;
   stroke-dasharray: 80;
   stroke-dashoffset: 0;

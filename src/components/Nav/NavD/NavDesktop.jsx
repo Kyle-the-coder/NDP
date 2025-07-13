@@ -32,7 +32,7 @@ export function NavDesktop({
               key={link.linkName}
               className="link-container"
             >
-              <h1 className="bebas-thin-font">{link.linkName}</h1>
+              <h1 className="bebas-thin-font letter-space">{link.linkName}</h1>
 
               {hoverIndex === index && <div className="active"></div>}
             </div>
