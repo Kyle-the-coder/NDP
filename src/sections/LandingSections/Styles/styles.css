@@ -90,6 +90,14 @@
   cursor: pointer;
 }
 
+/* BIG SCREEN */
+@media only screen and (min-width: 1400px) {
+  .faq-card {
+    width: 70%;
+  }
+}
+
+/* PHONE */
 @media only screen and (max-width: 900px) {
   .styles-title {
     text-align: center;
