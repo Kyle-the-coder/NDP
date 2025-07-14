@@ -176,5 +176,10 @@ body {
 .border {
   width: 100%;
   margin-top: -20px;
-  z-index: 3;
+  z-index: 5;
+}
+
+.underline {
+  text-decoration: underline;
+  text-underline-offset: 6px;
 }

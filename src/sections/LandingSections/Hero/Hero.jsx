@@ -17,7 +17,6 @@ export function Hero() {
   return (
     <section className="display-column">
       <div className="landing-main">
-        <img src={landingBg} className="landing-bg" />
         <div className="vignette"></div>
         <div className="landing-content">
           <h1 className="anton-thin-font letter-space purple-text">Nebula</h1>

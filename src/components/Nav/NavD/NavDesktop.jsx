@@ -41,10 +41,10 @@ export function NavDesktop({
         <div className="shine"></div>
       </div>
 
-      {/* <div className="socials">
+      <div className="socials">
         <img src={fb} />
         <img src={insta} />
-      </div> */}
+      </div>
 
       <img src={lineDecor} className="space-decor left" />
       <img src={lineDecor} className="space-decor right roto" />
