@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { NavPhone } from "./NavP/NavPhone";
 import { NavDesktop } from "./NavD/NavDesktop";
 import { scrollToSection } from "../SmoothScroll";
+import navBorder from "../../assets/decor/lines/navBorder.svg";
+import navPhoneBorder from "../../assets/decor/lines/navPhoneBorder.svg";
 import navDecor from "../../assets/decor/imgs/nav-decor.svg";
 import navDecorLine from "../../assets/decor/lines/gradLine.svg";
 import gsap from "gsap";
@@ -85,51 +87,56 @@ export function Nav() {
   }, [isHamburgerActive]);
 
   return (
-    <nav id="nav" className="nav-main-container">
-      <div className="nav-overflow-container">
-        {windowWidth <= 900 ? (
-          <NavPhone
-            navigate={navigate}
-            handleActivateHamburger={handleActivateHamburger}
-            isAnimationActive={isAnimationActive}
-          />
-        ) : (
-          <NavDesktop
-            links={links}
-            hoverIndex={hoverIndex}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
-            handleScrollTo={handleScrollTo}
-            navigate={navigate}
-          />
+    <nav id="nav" className="display-column">
+      <div className="nav-main-container">
+        <div className="nav-overflow-container">
+          {windowWidth <= 900 ? (
+            <NavPhone
+              navigate={navigate}
+              handleActivateHamburger={handleActivateHamburger}
+              isAnimationActive={isAnimationActive}
+            />
+          ) : (
+            <NavDesktop
+              links={links}
+              hoverIndex={hoverIndex}
+              handleMouseEnter={handleMouseEnter}
+              handleMouseLeave={handleMouseLeave}
+              handleScrollTo={handleScrollTo}
+              navigate={navigate}
+            />
+          )}
+        </div>
+
+        {isHamburgerActive && (
+          <div className="navbar-phone-dropdown-container ">
+            <div className="dropdown-links-container">
+              {links.map((link, index) => (
+                <div key={link.linkName}>
+                  <h3
+                    className={`bebas-thin-font letter-space dropdown-link-name  ${
+                      hoverIndex === index && "yellow-text"
+                    }`}
+                    onClick={() => {
+                      handleMouseEnter(index);
+                      handleScrollTo(link.link);
+                    }}
+                  >
+                    {link.linkName}
+                    {hoverIndex === index && <div className="active"></div>}
+                  </h3>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 
-      {isHamburgerActive && (
-        <div className="navbar-phone-dropdown-container ">
-          <div className="dropdown-links-container">
-            {links.map((link, index) => (
-              <div key={link.linkName}>
-                <h3
-                  className="bebas-thin-font letter-space dropdown-link-name"
-                  onClick={() => {
-                    handleMouseEnter(index);
-                    handleScrollTo(link.link);
-                  }}
-                >
-                  {link.linkName}
-                  {hoverIndex === index && <div className="active"></div>}
-                </h3>
-              </div>
-            ))}
-          </div>
-        </div>
+      {windowWidth <= 900 ? (
+        <img src={navPhoneBorder} className="nav-phone-border" />
+      ) : (
+        <img src={navBorder} className="border" />
       )}
-      <div className="tech-decor-container">
-        <img src={navDecor} className="tech-decor" />{" "}
-        <img src={navDecorLine} className="tech-decor-line" />
-        <img src={navDecorLine} className="tech-decor-line-right" />
-      </div>
     </nav>
   );
 }

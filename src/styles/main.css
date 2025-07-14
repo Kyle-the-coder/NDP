@@ -147,7 +147,9 @@ body {
 .blue-text {
   color: var(--neon-blue);
 }
-
+.yellow-text {
+  color: var(--yellow);
+}
 .purple-text {
   color: var(--purple);
 }

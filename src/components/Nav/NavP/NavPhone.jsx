@@ -17,6 +17,7 @@ export function NavPhone({
             navigate("/");
           }}
         />
+        <div className="shine-phone"></div>
       </div>
       <div
         className="nav-hamburger-container"
