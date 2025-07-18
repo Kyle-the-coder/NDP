@@ -58,6 +58,10 @@
   filter: drop-shadow(0px 0px 10px var(--neon-blue));
 }
 
+.footer-text {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
 /* BIG SCREEN */
 @media only screen and (min-width: 1400px) {
 }
@@ -79,6 +83,10 @@
   }
 
   .content-container {
-    height: 100%;
+    height: 70%;
+  }
+
+  .footer-text {
+    font-size: 3rem;
   }
 }

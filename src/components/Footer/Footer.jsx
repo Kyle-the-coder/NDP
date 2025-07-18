@@ -27,7 +27,9 @@ export function Footer() {
         <TechDisplay
           center={
             <>
-              <h1 className="bebas-thin-font letter-space">Class Info:</h1>
+              <h1 className="bebas-thin-font letter-space footer-text">
+                Class Info:
+              </h1>
               <div className="content-container center">
                 <Button
                   fontSize={
@@ -44,7 +46,7 @@ export function Footer() {
           center={
             <>
               <h1
-                className="bebas-thin-font letter-space"
+                className="bebas-thin-font letter-space footer-text"
                 style={{ marginBottom: windowWidth <= 900 && "10px" }}
               >
                 Contact:

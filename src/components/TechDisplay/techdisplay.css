@@ -1,41 +1,35 @@
+/* techdisplay.css */
 .tech-content-container {
-  width: min(100%, 400px);
-  height: 700px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  width: min(100%, 500px);
+  height: min(100%, 600px);
   position: relative;
-  background-color: rgb(41, 89, 89);
-  margin-top: 100px;
+  margin-top: 100px; /* ensures nothing spills outside */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tech-content {
-  width: 100%;
-  height: 95%;
+  width: min(100%, 500px);
+  height: 90%;
+  position: absolute;
+  z-index: 1; /* content behind the svg */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-radius: 3rem;
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  overflow: hidden;
-}
-
-.tech-content > h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  padding: 2rem;
+  overflow: "hidden";
 }
 
 .tech-content-decor {
-  width: auto;
+  width: 100%;
   height: 100%;
+  object-fit: fill;
+  z-index: 2; /* svg border goes above */
+  pointer-events: none; /* allow clicks to go through */
 }
 
 /* PHONE */
 @media only screen and (max-width: 900px) {
-  .tech-content > h1 {
-    font-size: 3rem;
-  }
 }
