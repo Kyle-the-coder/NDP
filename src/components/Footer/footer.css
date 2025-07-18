@@ -13,65 +13,26 @@
 .logo-container {
   width: 500px;
   position: relative;
+  margin-bottom: 50px;
 }
 
 .logo-container > img {
   width: 100%;
 }
-
 .footer-shine {
-  width: 220px;
-  height: 150px;
+  width: 50%;
+  height: 40%;
   background: radial-gradient(
     ellipse at center,
     rgba(255, 255, 255, 0.568) 0%,
     rgba(255, 255, 255, 0) 50%
   );
   position: absolute;
-  top: -5px;
+  top: 3%;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
 }
-
-.footer-content-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-content {
-  width: 500px;
-  height: 700px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 100px 0px;
-}
-
-.footer-content > h1 {
-  font-size: 3rem;
-}
-
-.footer-content-decor {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.content-info > h1 {
-  font-size: 4rem;
-}
-
-.footer-roto {
-  transform: scaleX(-1);
-}
-
 .content-container {
   width: 100%;
   height: 80%;
@@ -106,27 +67,18 @@
   .footer-main {
     padding: 50px 20px;
   }
-  .footer-content-container {
-    flex-direction: column;
-  }
 
   .logo-container {
-    width: 100%;
-    margin-bottom: 50px;
-  }
-
-  .footer-shine {
-    top: -32px;
-  }
-
-  .footer-content {
-    width: 100%;
-    height: 450px;
+    width: 90%;
     margin-bottom: 50px;
   }
 
   .contact-icon {
     width: 50px;
     height: 50px;
+  }
+
+  .content-container {
+    height: 100%;
   }
 }

@@ -183,3 +183,17 @@ body {
   text-decoration: underline;
   text-underline-offset: 6px;
 }
+
+.flex-evenly {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+/* PHONE */
+@media only screen and (max-width: 900px) {
+  .flex-evenly {
+    flex-direction: column;
+  }
+}
