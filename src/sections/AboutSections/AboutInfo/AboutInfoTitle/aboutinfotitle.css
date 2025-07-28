@@ -1,0 +1,10 @@
+.about-info-title-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-info-title-main > h1 {
+  font-size: clamp(3rem, 4vw, 5rem);
+}
