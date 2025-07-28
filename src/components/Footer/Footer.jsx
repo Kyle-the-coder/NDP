@@ -1,8 +1,10 @@
 import logo from "../../assets/logo/NBDLogo.png";
-import techOutline from "../../assets/decor/lines/techOutline.svg";
 import fb from "../../assets/icons/functIcons/facebook-logo.png";
 import ig from "../../assets/icons/functIcons/instagram.png";
 import email from "../../assets/icons/functIcons/envelope.png";
+
+import border from "../../assets/decor/lines/border.svg";
+import phoneBorder from "../../assets/decor/lines/phoneBorder.svg";
 import "./footer.css";
 import { Button } from "../Button/Button";
 import { useEffect, useState } from "react";
@@ -18,12 +20,17 @@ export function Footer() {
   }, []);
   return (
     <section id="footer" className="footer-main">
+      {windowWidth <= 900 ? (
+        <img src={phoneBorder} className="border" />
+      ) : (
+        <img src={border} className="border-footer" />
+      )}
       <div className="logo-container">
         <img src={logo} className="footer-logo" />
         <div className="footer-shine"></div>
       </div>
 
-      <div className="flex-evenly">
+      <div className="flex-evenly phone-padding">
         <TechDisplay
           center={
             <>

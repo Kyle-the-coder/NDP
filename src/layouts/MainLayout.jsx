@@ -1,7 +1,7 @@
 import { Outlet, useNavigation } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
 import { Nav } from "../components/Nav/Nav";
-// import { Footer } from "../components/Footer/Footer";
+import { Footer } from "../components/Footer/Footer";
 // import upArrow from "../assets/icons/ogUpArrow.png";
 // import { scrollToSection } from "../components/SmoothScroll";
 // import { Loader } from "../components/Loader/Loader";
@@ -59,7 +59,7 @@ export function MainLayout() {
         >
           <Outlet />
         </Suspense>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </InfoContext.Provider>
   );

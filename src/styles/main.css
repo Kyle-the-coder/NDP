@@ -17,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  color: white;
 }
 
 .main-container {
@@ -64,6 +65,9 @@ body {
 @font-face {
   font-family: "Anton";
   src: url("./Anton-Regular.ttf") format("truetype");
+  font-weight: 1 999;
+  font-stretch: 75% 125%;
+  font-style: normal;
 }
 @font-face {
   font-family: "Urban";
@@ -177,6 +181,16 @@ body {
   width: 100%;
   margin-top: -20px;
   z-index: 5;
+}
+
+.border-footer {
+  width: 100%;
+  margin-top: -30px;
+  z-index: 5;
+}
+
+.phone-padding {
+  padding: 10px 20px;
 }
 
 .underline {

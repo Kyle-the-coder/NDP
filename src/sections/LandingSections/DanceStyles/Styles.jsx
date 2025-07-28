@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../../../components/Button/Button";
-import border from "../../../assets/decor/lines/border.svg";
-import phoneBorder from "../../../assets/decor/lines/phoneBorder.svg";
 import stylesBg from "../../../assets/hero/NBDHeroBg.webp";
 import minus from "../../../assets/icons/functIcons/shrink.png";
 import plus from "../../../assets/icons/functIcons/expand.png";
@@ -125,11 +123,6 @@ export function Styles() {
           ))}
         </div>
       </div>
-      {windowWidth <= 900 ? (
-        <img src={phoneBorder} className="border" />
-      ) : (
-        <img src={border} className="border" />
-      )}
     </section>
   );
 }
