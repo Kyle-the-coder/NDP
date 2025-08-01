@@ -1,6 +1,6 @@
 import "./aboutinfoblerb.css";
 
-export function AboutInfoBlerb() {
+export function AboutInfoBlerb({ blerb }) {
   return (
     <section className="about-info-blerb-main">
       <p className="urban-thin-font letter-space">

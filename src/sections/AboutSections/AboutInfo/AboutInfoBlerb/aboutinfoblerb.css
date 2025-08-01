@@ -16,4 +16,8 @@
 
 /* PHONE */
 @media only screen and (max-width: 900px) {
+  .about-info-blerb-main > p {
+    text-align: center;
+    font-size: 1.5rem;
+  }
 }

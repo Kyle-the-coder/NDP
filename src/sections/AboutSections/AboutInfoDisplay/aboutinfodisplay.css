@@ -54,4 +54,17 @@
 
 /* PHONE */
 @media only screen and (max-width: 900px) {
+  .about-display-main {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-img-container {
+    width: 100%;
+    margin-bottom: 50px;
+  }
+  .about-info {
+    width: 100%;
+  }
 }

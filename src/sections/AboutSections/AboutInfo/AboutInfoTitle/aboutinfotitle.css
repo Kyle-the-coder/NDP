@@ -20,4 +20,13 @@
 
 /* PHONE */
 @media only screen and (max-width: 900px) {
+  .about-info-title-main > h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 5rem;
+  }
+
+  .about-info-title-main {
+    margin-bottom: 50px;
+  }
 }
