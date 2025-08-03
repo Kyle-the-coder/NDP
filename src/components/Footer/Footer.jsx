@@ -1,8 +1,7 @@
-import logo from "../../assets/logo/NBDLogo.png";
+import logo from "../../assets/logo/NBDLogo.svg";
 import fb from "../../assets/icons/functIcons/facebook-logo.png";
 import ig from "../../assets/icons/functIcons/instagram.png";
 import email from "../../assets/icons/functIcons/envelope.png";
-
 import border from "../../assets/decor/lines/border.svg";
 import phoneBorder from "../../assets/decor/lines/phoneBorder.svg";
 import "./footer.css";
@@ -27,7 +26,6 @@ export function Footer() {
       )}
       <div className="logo-container">
         <img src={logo} className="footer-logo" />
-        <div className="footer-shine"></div>
       </div>
 
       <div className="flex-evenly phone-padding">

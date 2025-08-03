@@ -5,8 +5,6 @@ import { NavDesktop } from "./NavD/NavDesktop";
 import { scrollToSection } from "../SmoothScroll";
 import navBorder from "../../assets/decor/lines/navBorder.svg";
 import navPhoneBorder from "../../assets/decor/lines/navPhoneBorder.svg";
-import navDecor from "../../assets/decor/imgs/nav-decor.svg";
-import navDecorLine from "../../assets/decor/lines/gradLine.svg";
 import gsap from "gsap";
 import "./nav.css";
 

@@ -21,7 +21,10 @@ export default function AboutPage() {
     <section className="about-main">
       <img src={aboutBg} className="about-bg" />
       <div className="about-z-index">
-        <PageTitle />
+        <PageTitle
+          title="WHO WE ARE"
+          blerb="Meet The Minds Behind The Movement"
+        />
         {windowWidth <= 900 ? (
           <>
             <AboutInfoDisplayNDPPhone
@@ -56,6 +59,12 @@ export default function AboutPage() {
             />
           </>
         )}
+
+        <div className="about-quote-container">
+          <h1 className="anton-font letter-space">
+            "We don't just teach steps- we launch dancers into their potential"
+          </h1>
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 // components/Nav/NavPhone.jsx
-import logo from "../../../assets/logo/NBDLogo.png";
+import logo from "../../../assets/logo/NBDLogo.svg";
 import { Hamburger } from "../../Hamburger/Hamburger";
 import "../nav.css";
 
@@ -17,7 +17,6 @@ export function NavPhone({
             navigate("/");
           }}
         />
-        <div className="shine-phone"></div>
       </div>
       <div
         className="nav-hamburger-container"

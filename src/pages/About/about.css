@@ -25,6 +25,23 @@
   z-index: 3;
 }
 
+.about-quote-container {
+  width: 100%;
+  background-color: #ef14ff6f;
+  margin-top: 200px;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid var(--purple);
+  border-radius: 1.5rem;
+}
+
+.about-quote-container > h1 {
+  font-size: clamp(3rem, 4vw, 4rem);
+  text-align: center;
+}
+
 /* BIG SCREEN */
 @media only screen and (min-width: 1400px) {
 }
@@ -33,5 +50,13 @@
 @media only screen and (max-width: 900px) {
   .about-main {
     padding: 100px 20px 0px 20px;
+  }
+
+  .about-quote-container {
+    padding: 30px 5px;
+    margin-bottom: 100px;
+  }
+  .about-quote-container > h1 {
+    font-size: 2rem;
   }
 }

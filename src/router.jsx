@@ -3,7 +3,7 @@ import { MainLayout } from "./layouts/MainLayout";
 import { ErrorLayout } from "./layouts/ErrorLayout";
 import { landingRoute } from "./pages/LP/lpRoute";
 import { aboutRoute } from "./pages/About/aboutRoute";
-// import { classesRoute } from "./pages/Classes/classesRoute.jsx";
+import { classesRoute } from "./pages/Classes/classesRoute.jsx";
 // import { singleClassRoute } from "./pages/SingleClass/singleClassRoute.jsx";
 // import { loginRoute } from "./pages/Login/loginRoute.jsx";
 // import { PrivateRoute } from "./components/PrivateRoute.jsx";
@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", ...landingRoute },
       { path: "/about", ...aboutRoute },
-      // { path: "/classes", ...classesRoute },
+      { path: "/classes", ...classesRoute },
       // { path: "/classes/singleClass/:id", ...singleClassRoute },
       // { path: "/login", ...loginRoute },
       // {

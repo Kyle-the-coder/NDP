@@ -1,7 +1,7 @@
 // components/Nav/NavDesktop.jsx
 import fb from "../../../assets/icons/functIcons/facebook-logo.png";
 import insta from "../../../assets/icons/functIcons/instagram.png";
-import logo from "../../../assets/logo/NBDLogo.png";
+import logo from "../../../assets/logo/NBDLogo.svg";
 import lineDecor from "../../../assets/decor/imgs/spaceDecor.webp";
 import "../nav.css";
 
@@ -38,7 +38,6 @@ export function NavDesktop({
             </div>
           ))}
         </div>
-        <div className="shine"></div>
       </div>
 
       <div className="socials">

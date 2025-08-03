@@ -18,20 +18,7 @@
 .logo-container > img {
   width: 100%;
 }
-.footer-shine {
-  width: 50%;
-  height: 40%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.568) 0%,
-    rgba(255, 255, 255, 0) 50%
-  );
-  position: absolute;
-  top: 3%;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
+
 .content-container {
   width: 100%;
   height: 80%;

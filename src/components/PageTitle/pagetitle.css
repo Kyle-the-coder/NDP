@@ -12,12 +12,15 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .page-title-title > h1 {
   font-size: clamp(5rem, 6vw, 7rem);
   transform: scaleY(1.8);
   letter-spacing: clamp(0.1em, 1vw, 2em);
+  text-align: center;
+  line-height: 1;
 }
 
 .light-blue-line {
@@ -26,12 +29,16 @@
   background-color: var(--neon-blue);
 }
 
+.title-mb {
+  margin-bottom: 120px;
+}
+
 .page-title-blerb {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 0px;
+  padding: 50px 0px;
 }
 
 .page-title-blerb > p {
