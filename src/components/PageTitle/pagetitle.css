@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 50px;
 }
 
 .page-title-title {
@@ -47,6 +48,9 @@
 
 /* BIG SCREEN */
 @media only screen and (min-width: 1400px) {
+  .page-title-main {
+    margin-top: 100px;
+  }
   .page-title-title {
     margin-bottom: 50px;
   }
