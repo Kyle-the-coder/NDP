@@ -1,0 +1,13 @@
+.vid-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  margin-top: -30px;
+  position: relative;
+}
+
+.vid-main > video {
+  width: 100%;
+}
