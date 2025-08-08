@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import heroBg from "../../../assets/design/dbBg.jpg";
-import heroBgPhone from "../../../assets/design/graffiti.png";
 
 import "./dbhero.css";
 
@@ -19,14 +17,12 @@ export function DBHero() {
     <section className="db-hero-main-container">
       {windowWidth <= 600 ? (
         <>
-          <img src={heroBgPhone} />
           <h1 className="outfit-font ">Welcome</h1>
           <h1 className="outfit-font green-text">To Your</h1>
           <h1 className="outfit-font green-text">Dashboard</h1>
         </>
       ) : (
         <>
-          <img src={heroBg} />{" "}
           <h1 className="outfit-font green-text">Welcome</h1>
           <h1 className="outfit-font green-text">To Your</h1>
           <h1

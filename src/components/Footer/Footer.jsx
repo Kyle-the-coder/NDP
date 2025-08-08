@@ -25,7 +25,10 @@ export function Footer() {
       <img
         className="footer-login"
         src={login}
-        onClick={() => navigate("/login")}
+        onClick={() => {
+          navigate("/login");
+          window.scrollTo(0, 0);
+        }}
       />
       {windowWidth <= 900 ? (
         <img src={phoneBorder} className="border" />

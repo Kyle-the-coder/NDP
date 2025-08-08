@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
-import add from "../../../assets/icons/add.png";
-import edit from "../../../assets/icons/edit.png";
-import cat from "../../../assets/icons/options-lines.png";
+import { Button } from "../../../components/Button/Button";
+import add from "../../../assets/icons/functIcons/add.png";
+import edit from "../../../assets/icons/functIcons/edit.png";
+import img from "../../../assets/icons/functIcons/img.png";
 import "./dbdirection.css";
-import { WordButton } from "../../../components/Buttons/WordButton/WordButton";
 
 export function DBDirection() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export function DBDirection() {
   return (
     <section
       style={{ padding: "40px 20px", gap: "50px" }}
-      className="display-column charcoal-bg neg-marg"
+      className="display-column z-index"
     >
       <div
         className="db-direction-container "
@@ -32,7 +32,7 @@ export function DBDirection() {
           window.scrollTo(0, 0);
         }}
       >
-        <h1 className="outfit-font">Create a Class Post</h1>
+        <h1 className="outfit-font">Create a Class</h1>
         <img src={add} />
       </div>
       <div
@@ -43,22 +43,22 @@ export function DBDirection() {
           window.scrollTo(0, 0);
         }}
       >
-        <h1 className="outfit-font">Edit a Class Post</h1>
+        <h1 className="outfit-font">Edit Your Classes</h1>
         <img src={edit} />
       </div>
       <div
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/editCat");
+          navigate("/editImg");
           window.scrollTo(0, 0);
         }}
       >
-        <h1 className="outfit-font">Edit Common Categories</h1>
-        <img src={cat} />
+        <h1 className="outfit-font">Edit Videos</h1>
+        <img src={img} />
       </div>
 
-      <WordButton
+      <Button
         text="Logout"
         onClick={() => {
           handleLogout();
@@ -66,7 +66,7 @@ export function DBDirection() {
         }}
       >
         Logout
-      </WordButton>
+      </Button>
     </section>
   );
 }
