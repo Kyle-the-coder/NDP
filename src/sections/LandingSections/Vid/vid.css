@@ -11,3 +11,16 @@
 .vid-main > video {
   width: 100%;
 }
+
+/* PHONE */
+@media only screen and (max-width: 900px) {
+  .vid-main {
+    margin-top: -6%;
+    height: 700px;
+  }
+
+  .vid-main > video {
+    height: 100%;
+    object-fit: cover;
+  }
+}

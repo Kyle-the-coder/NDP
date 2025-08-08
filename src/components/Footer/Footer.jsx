@@ -4,12 +4,15 @@ import ig from "../../assets/icons/functIcons/instagram.png";
 import email from "../../assets/icons/functIcons/envelope.png";
 import border from "../../assets/decor/lines/border.svg";
 import phoneBorder from "../../assets/decor/lines/phoneBorder.svg";
-import "./footer.css";
+import login from "../../assets/icons/functIcons/person.png";
 import { Button } from "../Button/Button";
 import { useEffect, useState } from "react";
 import { TechDisplay } from "../TechDisplay/TechDisplay";
+import "./footer.css";
+import { useNavigate } from "react-router-dom";
 
 export function Footer() {
+  const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -19,6 +22,11 @@ export function Footer() {
   }, []);
   return (
     <section id="footer" className="footer-main">
+      <img
+        className="footer-login"
+        src={login}
+        onClick={() => navigate("/login")}
+      />
       {windowWidth <= 900 ? (
         <img src={phoneBorder} className="border" />
       ) : (

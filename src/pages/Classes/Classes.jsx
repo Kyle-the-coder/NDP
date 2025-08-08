@@ -12,30 +12,31 @@ import { Button } from "../../components/Button/Button";
 export default function ClassesPage() {
   const cardArray = [
     {
-      png: popping,
-      title: "Popping",
+      class: true,
+      title: "Galactic Mini's",
       blerb:
-        "Learn the fundamentals of popping, muscle control, and rhythmic precision",
+        "Beginners ages 5-7, intro to our 3 styles of dance plus freestyle",
       link: "",
     },
     {
-      png: tutting,
-      title: "Tutting",
-      blerb: "Master geometric arm angles and intricate hand contorl sequences",
+      class: true,
+      title: "Rockateers",
+      blerb:
+        "Beginners ages 8-11, intro to our 3 styles of dance plus freestyle",
       link: "",
     },
     {
-      png: waving,
-      title: "Waving",
+      class: true,
+      title: "Astronauts",
       blerb:
-        "Develop fluid motion techniques that travel from fingertips to full body.",
+        "Beginners ages 12+, intro to our 3 styles of dance plus freestyle",
       link: "",
     },
     {
-      png: freestyle,
-      title: "Freestyle",
+      class: true,
+      title: "Technicians",
       blerb:
-        "Build confidence through structured freestyle drills and cyphers.",
+        "Advance ages 12+, advance classes include our 3 styles plus 2 shows a year",
       link: "",
     },
   ];
@@ -50,8 +51,8 @@ export default function ClassesPage() {
         <div className="classes-grid">
           {cardArray.map((info, index) => (
             <Card
+              isClass={info.class}
               key={index}
-              png={info.png}
               title={info.title}
               blerb={info.blerb}
               link={info.link}
