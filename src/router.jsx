@@ -8,7 +8,7 @@ import { classesRoute } from "./pages/Classes/classesRoute.jsx";
 import { loginRoute } from "./pages/Login/loginRoute.jsx";
 import { PrivateRoute } from "./components/PrivateRoute.jsx";
 import { dashboardRoute } from "./pages/Dashboard/dashboardRoute.jsx";
-// import { createClassRoute } from "./pages/CreateClass/createClassRoute.jsx";
+import { createClassRoute } from "./pages/CreateClass/createClassRoute.jsx";
 // import { aboutRoute } from "./pages/About/About";
 
 export const router = createBrowserRouter([
@@ -26,10 +26,10 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: <PrivateRoute>{dashboardRoute.element}</PrivateRoute>,
       },
-      // {
-      //   path: "/createClass",
-      //   element: <PrivateRoute>{createClassRoute.element}</PrivateRoute>,
-      // },
+      {
+        path: "/createClass",
+        element: <PrivateRoute>{createClassRoute.element}</PrivateRoute>,
+      },
     ],
   },
 ]);
