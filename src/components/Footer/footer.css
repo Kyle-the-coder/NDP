@@ -82,4 +82,9 @@
   .footer-text {
     font-size: 3rem;
   }
+
+  .footer-login {
+    top: 50px;
+    z-index: 4;
+  }
 }

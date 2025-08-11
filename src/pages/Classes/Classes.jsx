@@ -1,45 +1,30 @@
+import { useContext } from "react";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { Card } from "../../components/Card/Card";
+import { Button } from "../../components/Button/Button";
 
 import classesBg from "../../assets/decor/imgs/NDPAboutBg.png";
 import "./classes.css";
-import { Card } from "../../components/Card/Card";
-import popping from "../../assets/icons/decorIcons/PoppingIconTB.png";
-import tutting from "../../assets/icons/decorIcons/TuttingIconTB.png";
-import waving from "../../assets/icons/decorIcons/WavingIconTB.png";
-import freestyle from "../../assets/icons/decorIcons/FreestyleIconTB.png";
-import { Button } from "../../components/Button/Button";
+
+import { InfoContext } from "../../contexts/infoContext";
 
 export default function ClassesPage() {
-  const cardArray = [
-    {
+  const classesData = useContext(InfoContext);
+
+  // Prepare the card array similar to your original formatting
+  const cardArray = classesData.map((data) => {
+    const desc = data.description || "";
+    return {
       class: true,
-      title: "Galactic Mini's",
+      title: data.title,
       blerb:
-        "Beginners ages 5-7, intro to our 3 styles of dance plus freestyle",
-      link: "",
-    },
-    {
-      class: true,
-      title: "Rockateers",
-      blerb:
-        "Beginners ages 8-11, intro to our 3 styles of dance plus freestyle",
-      link: "",
-    },
-    {
-      class: true,
-      title: "Astronauts",
-      blerb:
-        "Beginners ages 12+, intro to our 3 styles of dance plus freestyle",
-      link: "",
-    },
-    {
-      class: true,
-      title: "Technicians",
-      blerb:
-        "Advance ages 12+, advance classes include our 3 styles plus 2 shows a year",
-      link: "",
-    },
-  ];
+        desc.split(" ").length > 15
+          ? desc.split(" ").slice(0, 15).join(" ") + "..."
+          : desc,
+      link: data.link || "",
+    };
+  });
+
   return (
     <section className="classes-main">
       <img src={classesBg} className="classes-bg" />

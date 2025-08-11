@@ -2,13 +2,13 @@ import { Outlet, useNavigation } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
 import { Nav } from "../components/Nav/Nav";
 import { Footer } from "../components/Footer/Footer";
-// import upArrow from "../assets/icons/ogUpArrow.png";
-// import { scrollToSection } from "../components/SmoothScroll";
-// import { Loader } from "../components/Loader/Loader";
-// import { db } from "../firebaseConfig";
-// import { collection, getDocs } from "firebase/firestore";
-import { InfoContext } from "../contexts/infoContext";
 import { Loader } from "../components/Loader/Loader";
+
+import { InfoContext } from "../contexts/infoContext";
+
+// Import Firestore functions and your configured db instance
+import { db } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 export function MainLayout() {
   const { state } = useNavigation();
@@ -18,18 +18,21 @@ export function MainLayout() {
   useEffect(() => {
     async function fetchClasses() {
       try {
-        // const querySnapshot = await getDocs(collection(db, "class"));
-        // const data = querySnapshot.docs.map((doc) => ({
-        //   ...doc.data(),
-        //   id: doc.id,
-        // }));
-        // setClasses(data);
+        // Reference to "classes" collection (make sure it's plural and matches your Firestore)
+        const classesCollection = collection(db, "classes");
+        const querySnapshot = await getDocs(classesCollection);
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setClasses(data);
       } catch (err) {
         console.error("Error loading classes:", err);
       } finally {
         setLoading(false);
       }
     }
+
     fetchClasses();
   }, []);
 
@@ -38,17 +41,12 @@ export function MainLayout() {
       <div className="loader-container">
         <Loader />
       </div>
-    ); // 👈 Only show loader until both route & data are ready
+    );
   }
 
   return (
     <InfoContext.Provider value={classes}>
       <div className="main-container white-text">
-        {/* <img
-          src={upArrow}
-          className="main-up-arrow"
-          onClick={() => scrollToSection("#nav")}
-        /> */}
         <Nav />
         <Suspense
           fallback={
