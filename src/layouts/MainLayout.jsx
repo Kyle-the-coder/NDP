@@ -6,34 +6,34 @@ import { Loader } from "../components/Loader/Loader";
 
 import { InfoContext } from "../contexts/infoContext";
 
-// Import Firestore functions and your configured db instance
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 
 export function MainLayout() {
   const { state } = useNavigation();
-  const [classes, setClasses] = useState([]);
+  const [infoData, setInfoData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchClasses() {
+    async function fetchNdpData() {
       try {
-        // Reference to "classes" collection (make sure it's plural and matches your Firestore)
-        const classesCollection = collection(db, "classes");
-        const querySnapshot = await getDocs(classesCollection);
-        const data = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setClasses(data);
+        const ndpCollection = collection(db, "ndp");
+        const querySnapshot = await getDocs(ndpCollection);
+
+        const dataByDocId = {};
+        querySnapshot.forEach((doc) => {
+          dataByDocId[doc.id] = doc.data();
+        });
+
+        setInfoData(dataByDocId);
       } catch (err) {
-        console.error("Error loading classes:", err);
+        console.error("Error loading ndp data:", err);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchClasses();
+    fetchNdpData();
   }, []);
 
   if (state === "loading" || loading) {
@@ -45,7 +45,7 @@ export function MainLayout() {
   }
 
   return (
-    <InfoContext.Provider value={classes}>
+    <InfoContext.Provider value={infoData}>
       <div className="main-container white-text">
         <Nav />
         <Suspense

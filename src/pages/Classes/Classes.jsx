@@ -9,9 +9,10 @@ import "./classes.css";
 import { InfoContext } from "../../contexts/infoContext";
 
 export default function ClassesPage() {
-  const classesData = useContext(InfoContext);
+  const infoData = useContext(InfoContext);
 
-  // Prepare the card array similar to your original formatting
+  const classesData = infoData.classes.allClasses || [];
+
   const cardArray = classesData.map((data) => {
     const desc = data.description || "";
     return {
@@ -34,15 +35,28 @@ export default function ClassesPage() {
           blerb="Choose Your Style. Step Into Your Power."
         />
         <div className="classes-grid">
-          {cardArray.map((info, index) => (
-            <Card
-              isClass={info.class}
-              key={index}
-              title={info.title}
-              blerb={info.blerb}
-              link={info.link}
-            />
-          ))}
+          {cardArray.length <= 0 ? (
+            <h1
+              className="bebas-thin-font"
+              style={{
+                fontSize: "clamp(3rem, 4vw, 5rem)",
+                marginBottom: "200px",
+                marginTop: "150px",
+              }}
+            >
+              No Classes posted at this Time😢
+            </h1>
+          ) : (
+            cardArray.map((info, index) => (
+              <Card
+                isClass={info.class}
+                key={index}
+                title={info.title}
+                blerb={info.blerb}
+                link={info.link}
+              />
+            ))
+          )}
         </div>
 
         <div className="classes-sign-up">

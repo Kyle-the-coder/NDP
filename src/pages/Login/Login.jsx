@@ -122,9 +122,9 @@ export default function Login() {
   return (
     <>
       {isLogin ? (
-        <>
+        <div className="login-loader">
           <Loader />
-        </>
+        </div>
       ) : (
         <>
           <section className=" login-main">
