@@ -206,6 +206,10 @@ body {
   gap: 20px;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /* PHONE */
 @media only screen and (max-width: 900px) {
   .flex-evenly {

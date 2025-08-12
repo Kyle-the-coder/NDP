@@ -11,6 +11,15 @@
   justify-content: space-between;
   padding: 20px 20px 20px 10px;
   margin: 0 auto;
+  position: relative;
+}
+
+.card-x-button {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -5%;
+  right: -5%;
 }
 
 .card-top {
