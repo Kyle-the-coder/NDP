@@ -9,6 +9,7 @@ import { loginRoute } from "./pages/Login/loginRoute.jsx";
 import { PrivateRoute } from "./components/PrivateRoute.jsx";
 import { dashboardRoute } from "./pages/Dashboard/dashboardRoute.jsx";
 import { createClassRoute } from "./pages/CreateClass/createClassRoute.jsx";
+import { editClassesRoute } from "./pages/EditClasses/editClassesRoute.jsx";
 // import { aboutRoute } from "./pages/About/About";
 
 export const router = createBrowserRouter([
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: "/createClass",
         element: <PrivateRoute>{createClassRoute.element}</PrivateRoute>,
+      },
+      {
+        path: "/editClasses",
+        element: <PrivateRoute>{editClassesRoute.element}</PrivateRoute>,
       },
     ],
   },

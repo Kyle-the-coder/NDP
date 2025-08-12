@@ -20,6 +20,7 @@ export default function CreateClass() {
   const [classPriceParam, setClassPriceParam] = useState("");
   const [classStartDate, setClassStartDate] = useState("");
   const [classEndDate, setClassEndDate] = useState("");
+  const [classLink, setClassLink] = useState("");
 
   // New states for the added fields
   const [style, setStyle] = useState("");
@@ -93,6 +94,7 @@ export default function CreateClass() {
         level,
         active,
         ageGroup,
+        classLink: classLink,
         createdAt: new Date().toISOString(),
       };
 
@@ -131,6 +133,7 @@ export default function CreateClass() {
       setLevel("");
       setActive(false);
       setAgeGroup("");
+      setClassLink("");
 
       setSuccess(true);
     } catch (err) {
@@ -388,6 +391,21 @@ export default function CreateClass() {
                 <option value="Teens">Teens</option>
                 <option value="Adults">Adults</option>
               </select>
+            </div>
+
+            <div className="input-container">
+              <label className="urban-font label">Class Sign Up Link</label>
+              <input
+                type="text"
+                placeholder="Enter Class Link"
+                className="input urban-thin-font"
+                value={classLink}
+                onChange={(e) => {
+                  setClassLink(e.target.value);
+                  setSuccess(false);
+                }}
+                required
+              />
             </div>
 
             {loading ? <Loader /> : <Button text="Submit" />}

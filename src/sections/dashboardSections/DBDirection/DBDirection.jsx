@@ -39,7 +39,7 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/editClass");
+          navigate("/editClasses");
           window.scrollTo(0, 0);
         }}
       >

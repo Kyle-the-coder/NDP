@@ -1,0 +1,47 @@
+.edit-classes-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  position: relative;
+}
+
+.edit-bg {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.back-arrow-container {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  background-color: whitesmoke;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.back-arrow {
+  width: 85%;
+  height: 85%;
+}
+
+.edit-class-title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+.edit-class-title > h1 {
+  font-size: clamp(3rem, 4vw, 5rem);
+}

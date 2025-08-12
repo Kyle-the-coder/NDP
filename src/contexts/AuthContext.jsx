@@ -19,7 +19,13 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{ currentUser }}>
-      {loading ? <Loader /> : children}
+      {loading ? (
+        <div className="loader-container">
+          <Loader />
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 }
