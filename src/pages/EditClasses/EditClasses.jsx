@@ -91,8 +91,9 @@ export default function EditClasses() {
       <div className="edit-class-grid">
         {cardArray.map((info) => (
           <Card
-            isClass={info.class}
             key={info.id}
+            isClass={info.class}
+            id={info.id}
             title={info.title}
             blerb={info.blerb}
             link={info.link}

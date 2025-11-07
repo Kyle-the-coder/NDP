@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import x from "../../assets/icons/functIcons/x-button.png";
 import "./card.css";
 
@@ -10,9 +11,16 @@ export function Card({
   pointer = false,
   isEdit = false,
   onDelete,
+  id,
 }) {
+  const navigate = useNavigate();
   return (
-    <section className={`card-main ${pointer && "pointer"}`}>
+    <section
+      className={`card-main ${pointer && "pointer"}`}
+      onClick={() =>
+        isEdit ? navigate(`/editClass/${id}`) : navigate(`/singleclass/${id}`)
+      }
+    >
       {isEdit && (
         <img
           src={x}
