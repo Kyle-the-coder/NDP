@@ -21,15 +21,7 @@ export function Footer() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <section id="footer" className="footer-main">
-      <img
-        className="footer-login"
-        src={login}
-        onClick={() => {
-          navigate("/login");
-          window.scrollTo(0, 0);
-        }}
-      />
+    <section id="footer" className="footer-main-container">
       {windowWidth <= 900 ? (
         <img src={phoneBorder} className="border" />
       ) : (
@@ -38,26 +30,22 @@ export function Footer() {
       <div className="logo-container">
         <img src={logo} className="footer-logo" />
       </div>
-
-      <div className="flex-evenly phone-padding">
-        <TechDisplay
-          center={
-            <>
-              <h1 className="bebas-thin-font letter-space footer-text">
-                Class Info:
-              </h1>
-              <div className="content-container center">
-                <Button
-                  fontSize={
-                    windowWidth <= 900 ? "2rem" : "clamp(2rem, 4vw, 3rem)"
-                  }
-                  text="Sign Up Here"
-                />
-              </div>
-            </>
-          }
+      <div className="footer-main">
+        <img
+          className="footer-login"
+          src={login}
+          onClick={() => {
+            navigate("/login");
+            window.scrollTo(0, 0);
+          }}
         />
 
+        <div className="classes-sign-up">
+          <div className="blue-bar"></div>
+          <h1 className="bebas-thin-font yellow-text">Class Info:</h1>
+          <Button text="See info here" />
+          <div className="blue-bar" style={{ marginBottom: "100px" }}></div>
+        </div>
         <TechDisplay
           center={
             <>
