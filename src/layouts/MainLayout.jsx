@@ -37,13 +37,13 @@ export function MainLayout() {
   }, []);
 
   // Only show loader while fetching global data
-  // if (loading) {
-  //   return (
-  //     <div className="loader-container" style={{ minHeight: "100vh" }}>
-  //       <Loader />
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="loader-container" style={{ minHeight: "100vh" }}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <InfoContext.Provider value={infoData}>
