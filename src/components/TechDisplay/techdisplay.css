@@ -11,7 +11,7 @@
 
 .tech-content {
   width: min(100%, 500px);
-  height: 90%;
+  height: 80%;
   position: absolute;
   z-index: 1; /* content behind the svg */
   display: flex;
