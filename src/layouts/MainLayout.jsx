@@ -1,5 +1,5 @@
-import { Outlet, useNavigation } from "react-router-dom";
-import { Suspense, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Nav } from "../components/Nav/Nav";
 import { Footer } from "../components/Footer/Footer";
 import { Loader } from "../components/Loader/Loader";
@@ -11,7 +11,6 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 
 export function MainLayout() {
-  const { state } = useNavigation();
   const [infoData, setInfoData] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -37,28 +36,33 @@ export function MainLayout() {
     fetchNdpData();
   }, []);
 
-  if (state === "loading" || loading) {
-    return (
-      <div className="loader-container">
-        <Loader />
-      </div>
-    );
-  }
+  // Only show loader while fetching global data
+  // if (loading) {
+  //   return (
+  //     <div className="loader-container" style={{ minHeight: "100vh" }}>
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
 
   return (
     <InfoContext.Provider value={infoData}>
       <div className="main-container white-text">
         <img src={mainBg} className="main-bg" />
+
         <Nav />
-        <Suspense
-          fallback={
-            <div className="loader-container">
+
+        {/* Main content */}
+        <div className="content-container" style={{ minHeight: "80vh" }}>
+          {loading && (
+            <div className="loader-container" style={{ minHeight: "100vh" }}>
               <Loader />
             </div>
-          }
-        >
+          )}
+          {/* No Suspense loader here; routes render instantly */}
           <Outlet />
-        </Suspense>
+        </div>
+
         <Footer />
       </div>
     </InfoContext.Provider>

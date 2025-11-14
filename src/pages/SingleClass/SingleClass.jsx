@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
+import { useContext, useMemo, useEffect } from "react";
+import { InfoContext } from "../../contexts/infoContext";
 
-import singleClassBg from "../../assets/decor/imgs/NDPAboutBg.png";
 import "./singleclass.css";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { Button } from "../../components/Button/Button";
@@ -11,68 +9,32 @@ import { Loader } from "../../components/Loader/Loader";
 
 export default function SingleClass() {
   const { id } = useParams();
+  const infoData = useContext(InfoContext);
 
-  const [classData, setClassData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  console.log("hello");
+  // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    async function fetchClass() {
-      try {
-        // Pull your single ndp document
-        const docRef = doc(db, "ndp", "classes");
-        const docSnap = await getDoc(docRef);
-        console.log(docSnap.data());
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          console.log("hello");
-          // Ensure the structure exists
-          const allClasses = data?.allClasses;
-          console.log("found", allClasses);
-          if (!allClasses || !Array.isArray(allClasses)) {
-            setError("Class list is missing.");
-            setLoading(false);
-            return;
-          }
+  // Determine classData only when context is available
+  const classData = useMemo(() => {
+    if (!infoData?.classes?.allClasses) return null;
+    return infoData.classes.allClasses.find((c) => c.id === id) || null;
+  }, [id, infoData]);
 
-          // Find the specific class in the array
-          const foundClass = allClasses.find((c) => c.id === id);
-
-          if (foundClass) {
-            setClassData(foundClass);
-          } else {
-            setError("Class not found.");
-          }
-        } else {
-          setError("NDP data not found.");
-        }
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load class data.");
-      }
-
-      setLoading(false);
-    }
-
-    fetchClass();
-  }, [id]);
-
-  // Loading state
-  if (loading) {
+  // If context hasn't loaded yet, show a small loader
+  console.log(infoData);
+  if (!infoData || Object.keys(infoData).length === 0) {
     return (
-      <div className="display-column">
-        <Loader />
+      <div className="loader-container" style={{ minHeight: "50vh" }}>
+        <Loader size="small" />
       </div>
     );
   }
 
-  // Error state
-  if (error) {
-    return <div className="single-class-main">{error}</div>;
+  // Only show "Class not found" if context is loaded but classData is null
+  if (!classData) {
+    return <div className="single-class-main">Class not found.</div>;
   }
 
   return (
