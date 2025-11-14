@@ -10,6 +10,7 @@ import { PrivateRoute } from "./components/PrivateRoute.jsx";
 import { dashboardRoute } from "./pages/Dashboard/dashboardRoute.jsx";
 import { createClassRoute } from "./pages/CreateClass/createClassRoute.jsx";
 import { editClassesRoute } from "./pages/EditClasses/editClassesRoute.jsx";
+import { singleClassRoute } from "./pages/SingleClass/singleClassRoute.jsx";
 // import { aboutRoute } from "./pages/About/About";
 
 export const router = createBrowserRouter([
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
       { path: "/", ...landingRoute },
       { path: "/about", ...aboutRoute },
       { path: "/classes", ...classesRoute },
-      // { path: "/classes/singleClass/:id", ...singleClassRoute },
+      { path: "/singleClass/:id", ...singleClassRoute },
       { path: "/login", ...loginRoute },
       {
         path: "/dashboard",

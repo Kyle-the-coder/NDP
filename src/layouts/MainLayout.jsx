@@ -4,6 +4,7 @@ import { Nav } from "../components/Nav/Nav";
 import { Footer } from "../components/Footer/Footer";
 import { Loader } from "../components/Loader/Loader";
 
+import mainBg from "../assets/decor/imgs/NDPAboutBg.png";
 import { InfoContext } from "../contexts/infoContext";
 
 import { db } from "../firebaseConfig";
@@ -47,6 +48,7 @@ export function MainLayout() {
   return (
     <InfoContext.Provider value={infoData}>
       <div className="main-container white-text">
+        <img src={mainBg} className="main-bg" />
         <Nav />
         <Suspense
           fallback={

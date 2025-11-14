@@ -19,7 +19,6 @@ export default function AboutPage() {
   }, []);
   return (
     <section className="about-main">
-      <img src={aboutBg} className="about-bg" />
       <div className="about-z-index">
         <PageTitle
           title="WHO WE ARE"

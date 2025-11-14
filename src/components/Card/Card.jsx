@@ -17,9 +17,9 @@ export function Card({
   return (
     <section
       className={`card-main ${pointer && "pointer"}`}
-      onClick={() =>
-        isEdit ? navigate(`/editClass/${id}`) : navigate(`/singleclass/${id}`)
-      }
+      onClick={() => {
+        navigate(isEdit ? `/editClass/${id}` : `/singleClass/${id}`);
+      }}
     >
       {isEdit && (
         <img

@@ -23,12 +23,12 @@ export default function ClassesPage() {
           ? desc.split(" ").slice(0, 15).join(" ") + "..."
           : desc,
       link: data.link || "",
+      id: data.id,
     };
   });
 
   return (
     <section className="classes-main">
-      <img src={classesBg} className="classes-bg" />
       <div className="classes-z-index">
         <PageTitle
           title="EXPLORE OUR GALACTIC MOVES"
@@ -54,6 +54,7 @@ export default function ClassesPage() {
                 title={info.title}
                 blerb={info.blerb}
                 link={info.link}
+                id={info.id}
               />
             ))
           )}
