@@ -47,31 +47,54 @@ export default function SingleClass() {
       ) : classData ? (
         // Class content once context and classData are ready
         <div className="single-class-z-index">
-          <PageTitle
-            title={classData.title}
-            blerb={classData.shortDescription || ""}
-          />
+          <PageTitle title={classData.title} />
 
-          <div className="single-class-info-container">
-            <h2>{classData.title}</h2>
-            <p>{classData.description}</p>
+          <div className="display-column">
+            <p
+              className="urban-thin-font"
+              style={{ fontSize: "2rem", textAlign: "center" }}
+            >
+              {classData.description}
+            </p>
 
             <div className="single-class-details">
-              <p>
-                <strong>Ages:</strong> {classData.ageGroup}, Ages{" "}
-                {classData.startAge}-{classData.endAge}
-              </p>
-              <p>
-                <strong>Style:</strong> {classData.style}
-              </p>
-              <p>
-                <strong>Level:</strong> {classData.level}
-              </p>
-              <p>
-                <strong>Price:</strong> ${classData.price}
-              </p>
+              <div className="single-block-flex-container">
+                <div className="single-block">
+                  <p className="bebas-font">
+                    <strong>Ages:</strong>
+                  </p>
+                  <p className="urban-thin-font">
+                    {classData.ageGroup}, Ages {classData.startAge}-
+                    {classData.endAge}
+                  </p>
+                </div>
+
+                <div className="single-block">
+                  <p className="bebas-font">
+                    <strong>Style:</strong>
+                  </p>
+                  <p className="urban-thin-font">{classData.style}</p>
+                </div>
+              </div>
+
+              <div className="single-block">
+                <p className="bebas-font">
+                  <strong>Level:</strong>
+                </p>
+                <p className="urban-thin-font"> {classData.level}</p>
+              </div>
+
+              <div className="single-block">
+                <p className="bebas-font">
+                  <strong>Price:</strong>
+                </p>
+                <p className="urban-thin-font">
+                  {" "}
+                  ${classData.price} {classData.priceParam}
+                </p>
+              </div>
             </div>
-            <Button text="See info here" />
+            <Button text="Sign Up Here" />
           </div>
         </div>
       ) : (

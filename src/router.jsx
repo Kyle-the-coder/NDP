@@ -36,6 +36,7 @@ export const router = createBrowserRouter([
         path: "/editClasses",
         element: <PrivateRoute>{editClassesRoute.element}</PrivateRoute>,
       },
+
       // {
       //   path: "/editClass/:id",
       //   element: <PrivateRoute>{editClassRoute.element}</PrivateRoute>,

@@ -16,5 +16,25 @@
 }
 
 .single-class-z-index {
+  width: 100%;
   z-index: 3;
+}
+
+.single-block {
+  width: 200px;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border: 2px solid var(--neon-blue);
+  border-radius: 0.5rem;
+  background-color: var(--dark-blue);
+}
+
+.single-block-flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
 }
