@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import aboutBg from "../../assets/decor/imgs/NDPAboutBg.png";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import {
@@ -7,10 +7,19 @@ import {
   AboutInfoDisplayNDP,
   AboutInfoDisplayNDPPhone,
 } from "../../sections/AboutSections/AboutInfoDisplay/AboutInfoDisplay";
+import gsap from "gsap";
 import "./about.css";
 
 export default function AboutPage() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const wrapperRef = useRef(null);
+  useEffect(() => {
+    gsap.to(wrapperRef.current, {
+      opacity: 1,
+      duration: 1.6,
+      ease: "power2.out",
+    });
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -18,7 +27,7 @@ export default function AboutPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <section className="about-main">
+    <section className="about-main" ref={wrapperRef} style={{ opacity: "0" }}>
       <div className="about-z-index">
         <PageTitle
           title="WHO WE ARE"

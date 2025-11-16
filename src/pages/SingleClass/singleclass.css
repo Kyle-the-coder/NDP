@@ -18,11 +18,16 @@
 .single-class-z-index {
   width: 100%;
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .single-block {
-  width: 200px;
-  padding: 20px 10px;
+  width: 100%;
+  padding: 30px 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,6 +35,11 @@
   border: 2px solid var(--neon-blue);
   border-radius: 0.5rem;
   background-color: var(--dark-blue);
+  margin-top: 50px;
+}
+
+.single-block > p {
+  font-size: clamp(2rem, 3vw, 4rem);
 }
 
 .single-block-flex-container {
@@ -37,4 +47,36 @@
   justify-content: center;
   align-items: center;
   gap: 40px;
+}
+
+.single-class-details {
+  width: 80%;
+  display: grid;
+  justify-items: stretch;
+  grid-template-columns: repeat(2, 1fr); /* 2 even columns */
+  grid-auto-rows: auto;
+  gap: 30px;
+  /* Center the content inside the whole container */
+  justify-items: center;
+  margin-bottom: 30px;
+}
+
+/* Make the 3rd child span the full width */
+.single-class-details > .single-block:nth-child(3) {
+  grid-column: 1 / -1; /* spans both columns */
+  width: 100%; /* optional: let it stretch full width */
+}
+
+/* PHONE */
+@media only screen and (max-width: 600px) {
+  .single-class-main {
+    padding: 100px 20px;
+  }
+  .single-class-details {
+    width: 100%;
+  }
+
+  .single-block > p {
+    font-size: 1.3rem;
+  }
 }

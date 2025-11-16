@@ -1,17 +1,27 @@
-import { useContext } from "react";
+// ClassesPage.jsx
+import { useContext, useEffect, useRef } from "react";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { Card } from "../../components/Card/Card";
 import { Button } from "../../components/Button/Button";
-
-import classesBg from "../../assets/decor/imgs/NDPAboutBg.png";
-import "./classes.css";
-
 import { InfoContext } from "../../contexts/infoContext";
+import { scrollToSection } from "../../components/SmoothScroll";
+import gsap from "gsap";
+
+import "./classes.css";
 
 export default function ClassesPage() {
   const infoData = useContext(InfoContext);
-
   const classesData = infoData.classes.allClasses || [];
+  const wrapperRef = useRef(null);
+
+  // Fade in when page mounts
+  useEffect(() => {
+    gsap.to(wrapperRef.current, {
+      opacity: 1,
+      duration: 1.6,
+      ease: "power2.out",
+    });
+  }, []);
 
   const cardArray = classesData.map((data) => {
     const desc = data.description || "";
@@ -27,13 +37,27 @@ export default function ClassesPage() {
     };
   });
 
+  // Fade-out transition handler passed to cards
+  const handlePageLeave = (navigateCallback) => {
+    gsap.to(wrapperRef.current, {
+      opacity: 0,
+      duration: 1,
+      ease: "power2.in",
+      onComplete: () => {
+        scrollToSection("#nav");
+        setTimeout(() => navigateCallback(), 700);
+      },
+    });
+  };
+
   return (
-    <section className="classes-main">
+    <section className="classes-main" ref={wrapperRef} style={{ opacity: "0" }}>
       <div className="classes-z-index">
         <PageTitle
           title="EXPLORE OUR GALACTIC MOVES"
           blerb="Choose Your Style. Step Into Your Power."
         />
+
         <div className="classes-grid">
           {cardArray.length <= 0 ? (
             <h1
@@ -49,12 +73,13 @@ export default function ClassesPage() {
           ) : (
             cardArray.map((info, index) => (
               <Card
-                isClass={info.class}
                 key={index}
+                isClass={info.class}
                 title={info.title}
                 blerb={info.blerb}
                 link={info.link}
                 id={info.id}
+                onNav={handlePageLeave} // 👈 this triggers the fade-out
               />
             ))
           )}

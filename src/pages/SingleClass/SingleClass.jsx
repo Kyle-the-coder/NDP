@@ -1,106 +1,85 @@
+// SingleClass.jsx
 import { useParams } from "react-router-dom";
-import { useContext, useMemo, useEffect } from "react";
+import { useContext, useMemo, useEffect, useRef } from "react";
 import { InfoContext } from "../../contexts/infoContext";
+import gsap from "gsap";
 
 import "./singleclass.css";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { Button } from "../../components/Button/Button";
-import { Loader } from "../../components/Loader/Loader";
 
 export default function SingleClass() {
   const { id } = useParams();
   const infoData = useContext(InfoContext);
+  const wrapperRef = useRef(null);
 
-  // Scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  // Only compute classData if context is loaded
+  // Compute class data only when context is ready
   const classData = useMemo(() => {
     if (!infoData?.classes?.allClasses) return null;
     return infoData.classes.allClasses.find((c) => c.id === id) || null;
   }, [id, infoData]);
 
-  // 1️⃣ Show loader if context is not ready yet
+  useEffect(() => {
+    if (!classData) return;
+
+    gsap.fromTo(
+      wrapperRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 1.2, ease: "power2.out" }
+    );
+  }, [classData]);
+
+  // Context not yet available → show nothing (keeps it invisible)
   if (!infoData || Object.keys(infoData).length === 0) {
+    return <section className="single-class-main" style={{ opacity: 0 }} />;
+  }
+
+  // Class not found
+  if (!classData) {
     return (
-      <div className="loader-container" style={{ minHeight: "50vh" }}>
-        <Loader size="small" />
-      </div>
+      <section className="single-class-main" style={{ opacity: 0 }}>
+        <div className="single-class-z-index">Class not found.</div>
+      </section>
     );
   }
 
-  // 2️⃣ Show error only if context ready but class not found
-  if (!classData) {
-    return <div className="single-class-main">Class not found.</div>;
-  }
-
-  // 3️⃣ Context ready and class exists → render class
   return (
-    <section className="single-class-main">
-      {Object.keys(infoData).length === 0 ? (
-        // Loader while context is empty
-        <div className="loader-container" style={{ minHeight: "50vh" }}>
-          <Loader size="small" />
-        </div>
-      ) : classData ? (
-        // Class content once context and classData are ready
-        <div className="single-class-z-index">
-          <PageTitle title={classData.title} />
+    <section
+      className="single-class-main"
+      ref={wrapperRef}
+      style={{ opacity: 0 }}
+    >
+      <div className="single-class-z-index">
+        <h1 className="urban-thin-font blue-text">
+          Ages {classData.startAge}-{classData.endAge}
+        </h1>
 
-          <div className="display-column">
-            <p
-              className="urban-thin-font"
-              style={{ fontSize: "2rem", textAlign: "center" }}
-            >
-              {classData.description}
+        <PageTitle title={classData.title} blerb={classData.description} />
+
+        <div className="single-class-details">
+          <div className="single-block">
+            <p className="bebas-font">
+              <strong>Style:</strong>
             </p>
+            <p className="urban-thin-font">{classData.style}</p>
+          </div>
 
-            <div className="single-class-details">
-              <div className="single-block-flex-container">
-                <div className="single-block">
-                  <p className="bebas-font">
-                    <strong>Ages:</strong>
-                  </p>
-                  <p className="urban-thin-font">
-                    {classData.ageGroup}, Ages {classData.startAge}-
-                    {classData.endAge}
-                  </p>
-                </div>
+          <div className="single-block">
+            <p className="bebas-font">
+              <strong>Level:</strong>
+            </p>
+            <p className="urban-thin-font">{classData.level}</p>
+          </div>
 
-                <div className="single-block">
-                  <p className="bebas-font">
-                    <strong>Style:</strong>
-                  </p>
-                  <p className="urban-thin-font">{classData.style}</p>
-                </div>
-              </div>
-
-              <div className="single-block">
-                <p className="bebas-font">
-                  <strong>Level:</strong>
-                </p>
-                <p className="urban-thin-font"> {classData.level}</p>
-              </div>
-
-              <div className="single-block">
-                <p className="bebas-font">
-                  <strong>Price:</strong>
-                </p>
-                <p className="urban-thin-font">
-                  {" "}
-                  ${classData.price} {classData.priceParam}
-                </p>
-              </div>
-            </div>
-            <Button text="Sign Up Here" />
+          <div className="single-block">
+            <p className="urban-thin-font" style={{ margin: "0 auto" }}>
+              ${classData.price} {classData.priceParam}
+            </p>
           </div>
         </div>
-      ) : (
-        // If context loaded but class not found
-        <div className="single-class-z-index">Class not found.</div>
-      )}
+
+        <Button text="Sign Up Here" />
+      </div>
     </section>
   );
 }
