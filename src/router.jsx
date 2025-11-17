@@ -11,6 +11,7 @@ import { dashboardRoute } from "./pages/Dashboard/dashboardRoute.jsx";
 import { createClassRoute } from "./pages/CreateClass/createClassRoute.jsx";
 import { editClassesRoute } from "./pages/EditClasses/editClassesRoute.jsx";
 import { singleClassRoute } from "./pages/SingleClass/singleClassRoute.jsx";
+import { danceStylesRoute } from "./pages/DanceStyles/danceStylesRoute.jsx";
 // import { aboutRoute } from "./pages/About/About";
 
 export const router = createBrowserRouter([
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
       { path: "/classes", ...classesRoute },
       { path: "/singleClass/:id", ...singleClassRoute },
       { path: "/login", ...loginRoute },
+      { path: "/dancestyle", ...danceStylesRoute },
       {
         path: "/dashboard",
         element: <PrivateRoute>{dashboardRoute.element}</PrivateRoute>,
