@@ -58,7 +58,7 @@
   align-items: center;
 }
 
-.card-bottom > a {
+.card-bottom > p {
   font-size: 2rem;
   text-decoration: none;
 }
