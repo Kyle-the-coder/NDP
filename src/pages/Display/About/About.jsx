@@ -1,12 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-import aboutBg from "../../assets/decor/imgs/NDPAboutBg.png";
-import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { PageTitle } from "../../../components/PageTitle/PageTitle";
 import {
   AboutInfoDisplayBen,
   AboutInfoDisplayBenPhone,
   AboutInfoDisplayNDP,
   AboutInfoDisplayNDPPhone,
-} from "../../sections/AboutSections/AboutInfoDisplay/AboutInfoDisplay";
+} from "../../../sections/AboutSections/AboutInfoDisplay/AboutInfoDisplay";
 import gsap from "gsap";
 import "./about.css";
 

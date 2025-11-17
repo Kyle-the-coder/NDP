@@ -1,13 +1,13 @@
 import "./createclass.css";
-import createClassBg from "../../assets/decor/imgs/NDPAboutBg.png";
-import add from "../../assets/icons/functIcons/new.png";
-import arrow from "../../assets/icons/functIcons/arrow.png";
-import { Button } from "../../components/Button/Button";
-import { Loader } from "../../components/Loader/Loader";
+import createClassBg from "../../../assets/decor/imgs/NDPAboutBg.png";
+import add from "../../../assets/icons/functIcons/new.png";
+import arrow from "../../../assets/icons/functIcons/arrow.png";
+import { Button } from "../../../components/Button/Button";
+import { Loader } from "../../../components/Loader/Loader";
 import { useEffect, useState } from "react";
-import { db } from "../../firebaseConfig";
+import { db } from "../../../firebaseConfig";
 import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { Card } from "../../components/Card/Card";
+import { Card } from "../../../components/Card/Card";
 import { useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 

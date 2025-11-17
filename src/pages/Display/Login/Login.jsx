@@ -5,9 +5,9 @@ import {
   GoogleAuthProvider,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
+import { auth } from "../../../firebaseConfig";
 import { useNavigate } from "react-router-dom";
-import loginBg from "../../assets/decor/imgs/NDPAboutBg.png";
+import loginBg from "../../../assets/decor/imgs/NDPAboutBg.png";
 import "./login.css";
 
 export default function Login() {

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import editBg from "../../assets/decor/imgs/NDPAboutBg.png";
-import arrow from "../../assets/icons/functIcons/arrow.png";
+import arrow from "../../../assets/icons/functIcons/arrow.png";
 
-import { db } from "../../firebaseConfig";
+import { db } from "../../../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import "./editClasses.css";
-import { Card } from "../../components/Card/Card";
+import { Card } from "../../../components/Card/Card";
 import { useNavigate } from "react-router-dom";
 
 export default function EditClasses() {
@@ -73,7 +72,6 @@ export default function EditClasses() {
 
   return (
     <section className="edit-classes-main">
-      <img src={editBg} className="edit-bg" />
       <div className="back-arrow-container">
         <img
           src={arrow}

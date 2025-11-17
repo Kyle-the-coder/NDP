@@ -5,6 +5,7 @@ import { Button } from "../../../components/Button/Button";
 import add from "../../../assets/icons/functIcons/add.png";
 import edit from "../../../assets/icons/functIcons/edit.png";
 import img from "../../../assets/icons/functIcons/img.png";
+import dance from "../../../assets/icons/functIcons/free-style.png";
 import "./dbdirection.css";
 
 export function DBDirection() {
@@ -54,8 +55,19 @@ export function DBDirection() {
           window.scrollTo(0, 0);
         }}
       >
-        <h1 className="outfit-font">Edit Videos</h1>
+        <h1 className="outfit-font">Edit Landing Page Video</h1>
         <img src={img} />
+      </div>
+      <div
+        className="db-direction-container "
+        onClick={(e) => {
+          e.preventDefault();
+          navigate("/editStyles");
+          window.scrollTo(0, 0);
+        }}
+      >
+        <h1 className="outfit-font">Edit Styles</h1>
+        <img src={dance} />
       </div>
 
       <Button

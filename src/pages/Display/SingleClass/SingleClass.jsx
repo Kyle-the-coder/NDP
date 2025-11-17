@@ -1,12 +1,12 @@
 // SingleClass.jsx
 import { useParams } from "react-router-dom";
 import { useContext, useMemo, useEffect, useRef } from "react";
-import { InfoContext } from "../../contexts/infoContext";
+import { InfoContext } from "../../../contexts/infoContext";
 import gsap from "gsap";
 
 import "./singleclass.css";
-import { PageTitle } from "../../components/PageTitle/PageTitle";
-import { Button } from "../../components/Button/Button";
+import { PageTitle } from "../../../components/PageTitle/PageTitle";
+import { Button } from "../../../components/Button/Button";
 
 export default function SingleClass() {
   const { id } = useParams();

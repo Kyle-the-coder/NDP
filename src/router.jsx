@@ -1,18 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import { MainLayout } from "./layouts/MainLayout";
 import { ErrorLayout } from "./layouts/ErrorLayout";
-import { landingRoute } from "./pages/LP/lpRoute";
-import { aboutRoute } from "./pages/About/aboutRoute";
+import { landingRoute } from "./pages/Display/LP/lpRoute.jsx";
+import { aboutRoute } from "./pages/Display/About/aboutRoute.jsx";
 import { classesRoute } from "./pages/Classes/classesRoute.jsx";
-// import { singleClassRoute } from "./pages/SingleClass/singleClassRoute.jsx";
-import { loginRoute } from "./pages/Login/loginRoute.jsx";
+import { loginRoute } from "./pages/Display/Login/loginRoute.jsx";
 import { PrivateRoute } from "./components/PrivateRoute.jsx";
-import { dashboardRoute } from "./pages/Dashboard/dashboardRoute.jsx";
-import { createClassRoute } from "./pages/CreateClass/createClassRoute.jsx";
-import { editClassesRoute } from "./pages/EditClasses/editClassesRoute.jsx";
-import { singleClassRoute } from "./pages/SingleClass/singleClassRoute.jsx";
-import { danceStylesRoute } from "./pages/DanceStyles/danceStylesRoute.jsx";
-// import { aboutRoute } from "./pages/About/About";
+import { dashboardRoute } from "./pages/Display/Dashboard/dashboardRoute.jsx";
+import { createClassRoute } from "./pages/Creates/CreateClass/createClassRoute.jsx";
+import { editClassesRoute } from "./pages/Edits/EditClasses/editClassesRoute.jsx";
+import { singleClassRoute } from "./pages/Display/SingleClass/singleClassRoute.jsx";
+import { danceStylesRoute } from "./pages/Display/DanceStyles/danceStylesRoute.jsx";
 
 export const router = createBrowserRouter([
   {

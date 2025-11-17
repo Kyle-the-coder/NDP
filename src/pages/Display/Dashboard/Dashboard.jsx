@@ -1,6 +1,6 @@
-import { DBHero } from "../../sections/dashboardSections/DBHero/DBHero";
-import { DBDirection } from "../../sections/dashboardSections/DBDirection/DBDirection";
-import dashboardBg from "../../assets/decor/imgs/NDPAboutBg.png";
+import { DBHero } from "../../../sections/dashboardSections/DBHero/DBHero";
+import { DBDirection } from "../../../sections/dashboardSections/DBDirection/DBDirection";
+import dashboardBg from "../../../assets/decor/imgs/NDPAboutBg.png";
 import "./dashboard.css";
 
 export default function Dashboard() {

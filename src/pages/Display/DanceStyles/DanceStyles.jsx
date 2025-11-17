@@ -1,12 +1,12 @@
 // SingleClass.jsx
 import { useParams } from "react-router-dom";
 import { useContext, useMemo, useEffect, useRef } from "react";
-import { InfoContext } from "../../contexts/infoContext";
+import { InfoContext } from "../../../contexts/infoContext";
 import gsap from "gsap";
 
 import "./singleclass.css";
-import { PageTitle } from "../../components/PageTitle/PageTitle";
-import { Button } from "../../components/Button/Button";
+import { PageTitle } from "../../../components/PageTitle/PageTitle";
+import { Button } from "../../../components/Button/Button";
 
 export default function DanceStyle() {
   const { id } = useParams();
@@ -31,25 +31,25 @@ export default function DanceStyle() {
 
   // Context not yet available → show nothing (keeps it invisible)
   if (!infoData || Object.keys(infoData).length === 0) {
-    return <section className="single-class-main" style={{ opacity: 0 }} />;
+    return <section className="dance-style-main" style={{ opacity: 0 }} />;
   }
 
   // Class not found
   if (!styleData) {
     return (
-      <section className="single-class-main" style={{ opacity: 0 }}>
-        <div className="single-class-z-index">Class not found.</div>
+      <section className="dance-style-main" style={{ opacity: 0 }}>
+        <div className="dance-style-z-index">Class not found.</div>
       </section>
     );
   }
 
   return (
     <section
-      className="single-class-main"
+      className="dance-style-main"
       ref={wrapperRef}
       style={{ opacity: 0 }}
     >
-      <div className="single-class-z-index">
+      <div className="dance-style-z-index">
         <PageTitle title={styleData.style} blerb={styleData.description} />
 
         <video src={styleData.videoLink} />
