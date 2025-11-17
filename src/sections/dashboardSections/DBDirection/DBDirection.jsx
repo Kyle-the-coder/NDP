@@ -33,7 +33,9 @@ export function DBDirection() {
           window.scrollTo(0, 0);
         }}
       >
-        <h1 className="outfit-font">Create a Class</h1>
+        <h1 className="urban-thin-font letter-space">
+          <strong className="yellow-text">Create</strong> a Class
+        </h1>
         <img src={add} />
       </div>
       <div
@@ -44,19 +46,23 @@ export function DBDirection() {
           window.scrollTo(0, 0);
         }}
       >
-        <h1 className="outfit-font">Edit Your Classes</h1>
+        <h1 className="urban-thin-font letter-space">
+          <span className="yellow-text">Edit</span> Class
+        </h1>
         <img src={edit} />
-      </div>
+      </div>{" "}
       <div
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/editImg");
+          navigate("/createStyle");
           window.scrollTo(0, 0);
         }}
       >
-        <h1 className="outfit-font">Edit Landing Page Video</h1>
-        <img src={img} />
+        <h1 className="urban-thin-font letter-space">
+          <strong className="purple-text">Create</strong> a Style
+        </h1>
+        <img src={dance} />
       </div>
       <div
         className="db-direction-container "
@@ -66,10 +72,24 @@ export function DBDirection() {
           window.scrollTo(0, 0);
         }}
       >
-        <h1 className="outfit-font">Edit Styles</h1>
+        <h1 className="urban-thin-font letter-space">
+          <span className="purple-text">Edit</span> Style
+        </h1>
         <img src={dance} />
       </div>
-
+      <div
+        className="db-direction-container "
+        onClick={(e) => {
+          e.preventDefault();
+          navigate("/editImg");
+          window.scrollTo(0, 0);
+        }}
+      >
+        <h1 className="urban-thin-font letter-space">
+          <strong className="blue-text">Edit</strong> Landing Page Video
+        </h1>
+        <img src={img} />
+      </div>
       <Button
         text="Logout"
         onClick={() => {

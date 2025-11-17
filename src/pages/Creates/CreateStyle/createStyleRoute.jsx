@@ -2,6 +2,6 @@ import { lazy } from "react";
 
 const CreateStylePage = lazy(() => import("./CreateStyle"));
 
-export const EditStylesRoute = {
+export const createStyleRoute = {
   element: <CreateStylePage />,
 };

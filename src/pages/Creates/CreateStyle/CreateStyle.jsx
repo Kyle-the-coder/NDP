@@ -5,34 +5,50 @@ import { Button } from "../../../components/Button/Button";
 import { Loader } from "../../../components/Loader/Loader";
 import { useEffect, useState } from "react";
 import { db } from "../../../firebaseConfig";
-import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { Card } from "../../../components/Card/Card";
 import { useNavigate } from "react-router-dom";
-import { format, parseISO } from "date-fns";
-import "./editstyles.css";
+import "./createstyle.css";
+
+// 🔥 Storage imports
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 export default function CreateStyle() {
   const [style, setStyle] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const [description, setDescription] = useState("");
-
+  const [stylePng, setStylePng] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [cardArray, setCardArray] = useState([]);
+
+  // Upload progress states
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
+
+  // PNG upload progress states
+  const [pngProgress, setPngProgress] = useState(0);
+  const [pngUploading, setPngUploading] = useState(false);
+
   const navigate = useNavigate();
 
-  // Reference to the single document /ndp/classes
+  const storage = getStorage();
   const DocRef = doc(db, "ndp", "danceStyles");
 
-  // Load existing classes from the allStyles array in the document
+  // Load existing styles
   useEffect(() => {
     async function fetchStyles() {
       try {
         const docSnap = await getDoc(DocRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
-          const classesData = (data.allStyles || []).map((cls, idx) => {
+          const stylesData = (data.allStyles || []).map((cls, idx) => {
             const desc = cls.description || "";
             return {
               id: cls.id || idx.toString(),
@@ -45,19 +61,98 @@ export default function CreateStyle() {
               link: cls.link || "",
             };
           });
-          setCardArray(classesData);
-        } else {
-          setCardArray([]);
+          setCardArray(stylesData);
         }
       } catch (err) {
-        console.error("Error fetching classes: ", err);
+        console.error("Error fetching styles:", err);
       }
     }
     fetchStyles();
   }, []);
 
+  // -----------------------------------------
+  // 🔥 VIDEO UPLOAD
+  // -----------------------------------------
+  const handleVideoUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    setUploadProgress(0);
+    setSuccess(false);
+
+    const filePath = `danceStyles/videos/${Date.now()}_${file.name}`;
+    const storageRef = ref(storage, filePath);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(Math.floor(progress));
+      },
+      (error) => {
+        console.error("Upload error:", error);
+        setUploading(false);
+      },
+      async () => {
+        const url = await getDownloadURL(uploadTask.snapshot.ref);
+        setVideoLink(url);
+        setUploading(false);
+        console.log("Uploaded VIDEO URL:", url);
+      }
+    );
+  };
+
+  // -----------------------------------------
+  // 🔵 PNG UPLOAD
+  // -----------------------------------------
+  const handlePngUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setPngUploading(true);
+    setPngProgress(0);
+    setSuccess(false);
+
+    const filePath = `danceStyles/png/${Date.now()}_${file.name}`;
+    const storageRef = ref(storage, filePath);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setPngProgress(Math.floor(progress));
+      },
+      (error) => {
+        console.error("PNG Upload error:", error);
+        setPngUploading(false);
+      },
+      async () => {
+        const url = await getDownloadURL(uploadTask.snapshot.ref);
+        setStylePng(url);
+        setPngUploading(false);
+        console.log("Uploaded PNG URL:", url);
+      }
+    );
+  };
+
+  // -----------------------------------------
+  // 🔥 SUBMIT FORM
+  // -----------------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!videoLink || !stylePng) {
+      alert("Please wait for ALL uploads to finish.");
+      return;
+    }
+
     setLoading(true);
     setSuccess(false);
 
@@ -70,22 +165,19 @@ export default function CreateStyle() {
       }
 
       const newStyle = {
-        id: Date.now().toString(), // unique ID based on timestamp
-        style: style,
-        description: description,
-        videoLink: videoLink,
-       
+        id: Date.now().toString(),
+        title: style,
+        description,
+        link: videoLink,
+        png: stylePng, // 🔥 store PNG URL
         createdAt: new Date().toISOString(),
       };
 
-      const updatedClasses = [newClass, ...currentStyles];
+      const updatedStyles = [newStyle, ...currentStyles];
 
-      await updateDoc(DocRef, {
-        allStyles: updatedClasses,
-      });
+      await updateDoc(DocRef, { allStyles: updatedStyles });
 
-      // Update local UI state
-      const classesData = updatedClasses.map((cls, idx) => {
+      const stylesData = updatedStyles.map((cls, idx) => {
         const desc = cls.description || "";
         return {
           id: cls.id || idx.toString(),
@@ -98,33 +190,25 @@ export default function CreateStyle() {
           link: cls.link || "",
         };
       });
-      setCardArray(classesData);
 
-      // Reset form fields including new ones
+      setCardArray(stylesData);
+
       setStyle("");
-      setVideoLink("");
       setDescription("");
-      ("");
-      ("");
-      ("");
-      setClassStartDate("");
-      setClassEndDate("");
-      setStyle("");
-      setLevel("");
-      setActive(false);
-      setAgeGroup("");
-      ("");
-
+      setVideoLink("");
+      setStylePng("");
+      setUploadProgress(0);
+      setPngProgress(0);
       setSuccess(true);
     } catch (err) {
-      console.error("Error adding class: ", err);
+      console.error("Error adding style:", err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section className="edit-styles-main">
+    <section className="create-style-main">
       <div className="back-arrow-container">
         <img
           src={arrow}
@@ -135,38 +219,35 @@ export default function CreateStyle() {
           }}
         />
       </div>
-      <div className="edit-styles-title">
-        <h1 className="bebas-font">Edit Styles</h1>
+
+      <div className="create-style-title">
+        <h1 className="bebas-font">Create Style</h1>
       </div>
 
-      <div className="edit-styles-form-display-container">
-        <div className="edit-styles-form-container">
-          <form className="edit-styles-form" onSubmit={handleSubmit}>
+      <div className="create-style-form-display-container">
+        <div className="create-style-form-container">
+          <form className="create-style-form" onSubmit={handleSubmit}>
             <div className="styles-form-img-container">
               <img src={add} className="styles-form-img" />
             </div>
 
             <div className="form-title">
-              <h1 className="bebas-font">Edit Style</h1>
+              <h1 className="bebas-font">Create Style</h1>
             </div>
 
             {success && (
               <p
-                style={{
-                  color: "green",
-                  fontWeight: "bold",
-                  marginBottom: "1rem",
-                }}
+                style={{ color: "green", fontWeight: "bold", marginBottom: 16 }}
               >
-                ✅ Class added successfully!
+                ✅ Style added successfully!
               </p>
             )}
 
             <div className="input-container">
-              <label className="urban-font label">Class Title</label>
+              <label className="urban-font label">Style:</label>
               <input
                 type="text"
-                placeholder="Enter Class Title"
+                placeholder="Enter Style"
                 className="input urban-thin-font"
                 value={style}
                 onChange={(e) => {
@@ -178,268 +259,116 @@ export default function CreateStyle() {
             </div>
 
             <div className="input-container">
-              <label className="urban-font label">Description</label>
+              <label className="urban-font label">Description:</label>
               <textarea
                 rows={10}
                 placeholder="Enter Description"
                 className="input urban-thin-font"
-                value={videoLink}
-                onChange={(e) => setVideoLink(e.target.value)}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 required
               />
             </div>
 
+            {/* VIDEO INPUT */}
             <div className="input-container">
-              <label className="urban-font label">Price</label>
+              <label className="urban-font label">Upload Video:</label>
+
               <input
-                type="number"
-                placeholder="100"
+                type="file"
+                accept="video/*"
                 className="input urban-thin-font"
-                value={}
-                onChange={(e) => (e.target.value)}
+                onChange={handleVideoUpload}
                 required
               />
 
-              <div
-                style={{
-                  marginTop: "0.5rem",
-                  display: "flex",
-                  gap: "1rem",
-                }}
-              >
-                <label className="urban-thin-font">
-                  <input
-                    type="radio"
-                    name="priceType"
-                    value="per Month"
-                    checked={ === "per Month"}
-                    onChange={(e) => (e.target.value)}
-                    style={{ marginRight: "0.3rem" }}
-                    required
-                  />
-                  Per Month
-                </label>
-
-                <label className="urban-thin-font">
-                  <input
-                    type="radio"
-                    name="priceType"
-                    value="per Session"
-                    checked={ === "per Session"}
-                    onChange={(e) => (e.target.value)}
-                    style={{ marginRight: "0.3rem" }}
-                    required
-                  />
-                  Per Session
-                </label>
-              </div>
-            </div>
-
-            <div className="input-container">
-              <label className="urban-font label">Ages</label>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "1rem",
-                  padding: "5px 0px",
-                }}
-              >
-                <div>
-                  <label className="urban-thin-font">Start Age</label>
-                  <input
-                    type="number"
-                    className="input urban-thin-font"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                  />
+              {/* Circular Upload */}
+              {uploading && (
+                <div className="upload-circle-container">
+                  <div
+                    className="upload-circle"
+                    style={{
+                      background: `conic-gradient(#4fa3ff ${
+                        uploadProgress * 3.6
+                      }deg, #ddd 0deg)`,
+                    }}
+                  >
+                    <span className="upload-percent">{uploadProgress}%</span>
+                  </div>
                 </div>
-                <div>
-                  <label className="urban-thin-font">End Age</label>
-                  <input
-                    type="number"
-                    className="input urban-thin-font"
-                    value={}
-                    onChange={(e) => (e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+              )}
             </div>
 
+            {/* PNG INPUT */}
             <div className="input-container">
-              <label className="urban-font label">Session Dates</label>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "1rem",
-                  padding: "5px 0px",
-                }}
-              >
-                <div>
-                  <label className="urban-thin-font">Start Date</label>
-                  <input
-                    type="date"
-                    className="input urban-thin-font"
-                    value={}
-                   onChange={(e) => setClassStartDate(e.target.value)}                   disabled={ === "per Month"}
-                    required={ !== "per Month"}
-                  />
-                </div>
-                <div>
-                  <label className="urban-thin-font">End Date</label>
-                  <input
-                    type="date"
-                    className="input urban-thin-font"
-                    value={classEndDate}
-                    onChange={(e) => setClassEndDate(e.target.value)}
-                    disabled={ === "per Month"}
-                    required={ !== "per Month"}
-                  />
-                </div>
-              </div>
-            </div>
+              <label className="urban-font label">Upload PNG:</label>
 
-            {/* New fields */}
-
-            <div className="input-container">
-              <label className="urban-font label">Style</label>
-              <select
-                className="input urban-thin-font"
-                value={style}
-                onChange={(e) => setStyle(e.target.value)}
-                required
-              >
-                <option value="" disabled>
-                  Select a style
-                </option>
-                <option value="Hip Hop">Hip Hop</option>
-                <option value="Popping">Popping</option>
-                <option value="Tutting">Tutting</option>
-                <option value="Waving">Waving</option>
-                <option value="Freestyle">Freestyle</option>
-                <option value="All Styles">All Styles Offered</option>
-              </select>
-            </div>
-
-            <div className="input-container">
-              <label className="urban-font label">Level</label>
-              <select
-                className="input urban-thin-font"
-                value={level}
-                onChange={(e) => setLevel(e.target.value)}
-                required
-              >
-                <option value="" disabled>
-                  Select a level
-                </option>
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-              </select>
-            </div>
-
-            <div
-              className="input-container"
-              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-            >
               <input
-                type="checkbox"
-                id="active-checkbox"
-                checked={active}
-                onChange={() => setActive(!active)}
-              />
-              <label htmlFor="active-checkbox" className="urban-font label">
-                Active
-              </label>
-            </div>
-
-            <div className="input-container">
-              <label className="urban-font label">Age Group</label>
-              <select
+                type="file"
+                accept="image/png,image/*"
                 className="input urban-thin-font"
-                value={ageGroup}
-                onChange={(e) => setAgeGroup(e.target.value)}
-                required
-              >
-                <option value="" disabled>
-                  Select a age group
-                </option>
-                <option value="Kids">Kids</option>
-                <option value="Teens">Teens</option>
-                <option value="Adults">Adults</option>
-              </select>
-            </div>
-
-            <div className="input-container">
-              <label className="urban-font label">Class Sign Up Link</label>
-              <input
-                type="text"
-                placeholder="Enter Class Link"
-                className="input urban-thin-font"
-                value={}
-                onChange={(e) => {
-                  (e.target.value);
-                  setSuccess(false);
-                }}
+                onChange={handlePngUpload}
                 required
               />
+
+              {/* Circular PNG Upload */}
+              {pngUploading && (
+                <div className="upload-circle-container">
+                  <div
+                    className="upload-circle"
+                    style={{
+                      background: `conic-gradient(#4fa3ff ${
+                        pngProgress * 3.6
+                      }deg, #ddd 0deg)`,
+                    }}
+                  >
+                    <span className="upload-percent">{pngProgress}%</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {loading ? <Loader /> : <Button text="Submit" />}
           </form>
         </div>
 
-        <div className="edit-styles-display-container">
-          <div className="edit-styles-display">
-            <h1 className="bebas-font blue-text">{style || "Title"}</h1>
-            <p className="urban-thin-font">{videoLink || "Description"}</p>
-            <p className="urban-thin-font">
-              {
-                ? `$${} ${ || ""}`
-                : "Price Per Session"}
-            </p>
-            <p className="uban-thin-font">
-              {" "}
-              <b className="urban-font blue-text">Session:</b>{" "}
-              { === "per Month"
-                ? "Monthly"
-                :  & classEndDate
-                ? `{(
-                    parseISO(),                    "MMM d, yyyy"
-                  )} - ${((classEndDate), "MMM d, yyyy")}`
-                : "Start Date - End Date"}
-            </p>
+        <div className="create-style-display-container">
+          <div className="create-style-display">
+            <div className="create-style-preview-png">
+              {stylePng ? (
+                <img src={stylePng} alt="PNG Preview" />
+              ) : (
+                <h2 className="urban-thin-font">(PNG)</h2>
+              )}
+              <h1 className="bebas-font blue-text">{style || "Style"}</h1>
+            </div>
+            <p className="urban-thin-font">{description || "Description"}</p>
 
-            <p className="urban-thin-font">
-              <b className="urban-font blue-text">Style:</b>{" "}
-              {style === "" ? "--" : style}
-            </p>
-            <p className="urban-thin-font">
-              <b className="urban-font blue-text">Level:</b>{" "}
-              {level === "" ? "--" : level}
-            </p>
-            <p className="urban-thin-font">
-              <b className="urban-font blue-text">Active:</b>{" "}
-              {active ? (active ? "Yes" : "No") : "--"}
-            </p>
-            <p className="urban-thin-font">
-              <b className="urban-font blue-text">Age Group:</b>{" "}
-              {ageGroup === "" ? "--" : ageGroup}
-            </p>
+            <h2 className="urban-thin-font">Video Preview:</h2>
+            {videoLink && (
+              <video
+                src={videoLink}
+                controls
+                style={{ width: "100%", marginTop: "1rem" }}
+              />
+            )}
           </div>
 
-          <h1 className="anton-font blue-text size">Current Classes</h1>
-          <div className="edit-styles-grid">
-            {cardArray.map((info, index) => (
-              <Card
-                isClass={info.class}
-                key={index}
-                title={info.title}
-                blerb={info.blerb}
-                link={info.link}
-              />
-            ))}
+          <h1 className="anton-font blue-text size">Current Styles</h1>
+          <div className="create-style-grid">
+            {cardArray.map((info, index) => {
+              console.log(info.png);
+              return (
+                <Card
+                  isClass={info.class}
+                  key={index}
+                  title={info.title}
+                  blerb={info.blerb}
+                  link={info.link}
+                  png={info.png}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

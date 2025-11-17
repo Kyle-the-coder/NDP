@@ -3,7 +3,7 @@ import { MainLayout } from "./layouts/MainLayout";
 import { ErrorLayout } from "./layouts/ErrorLayout";
 import { landingRoute } from "./pages/Display/LP/lpRoute.jsx";
 import { aboutRoute } from "./pages/Display/About/aboutRoute.jsx";
-import { classesRoute } from "./pages/Classes/classesRoute.jsx";
+import { classesRoute } from "./pages/Display/Classes/classesRoute.jsx";
 import { loginRoute } from "./pages/Display/Login/loginRoute.jsx";
 import { PrivateRoute } from "./components/PrivateRoute.jsx";
 import { dashboardRoute } from "./pages/Display/Dashboard/dashboardRoute.jsx";
@@ -11,7 +11,7 @@ import { createClassRoute } from "./pages/Creates/CreateClass/createClassRoute.j
 import { editClassesRoute } from "./pages/Edits/EditClasses/editClassesRoute.jsx";
 import { singleClassRoute } from "./pages/Display/SingleClass/singleClassRoute.jsx";
 import { danceStylesRoute } from "./pages/Display/DanceStyles/danceStylesRoute.jsx";
-import { EditStylesRoute } from "./pages/Edits/EditStyles/editStylesRoute.jsx";
+import { createStyleRoute } from "./pages/Creates/CreateStyle/createStyleRoute.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -38,8 +38,12 @@ export const router = createBrowserRouter([
         element: <PrivateRoute>{editClassesRoute.element}</PrivateRoute>,
       },
       {
+        path: "/createStyle",
+        element: <PrivateRoute>{createStyleRoute.element}</PrivateRoute>,
+      },
+      {
         path: "/editStyles",
-        element: <PrivateRoute>{EditStylesRoute.element}</PrivateRoute>,
+        element: <PrivateRoute>{editClassesRoute.element}</PrivateRoute>,
       },
 
       // {

@@ -7,7 +7,7 @@ import freestyle from "../../../assets/icons/decorIcons/FreestyleIconTB.png";
 import "./styles.css";
 import { Card } from "../../../components/Card/Card";
 
-export function Styles() {
+export function Styles({ stylesInfo }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const contentRefs = useRef([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -46,6 +46,7 @@ export function Styles() {
       link: "",
     },
   ];
+  console.log(stylesInfo);
 
   return (
     <section className="display-column">
@@ -53,13 +54,12 @@ export function Styles() {
         <img src={stylesBg} className="styles-bg" />
         <h1 className="bebas-thin-font blue-text styles-title">Dance Styles</h1>
         <div className="styles-grid">
-          {cardArray.map((info, index) => (
+          {stylesInfo.map((info, index) => (
             <Card
               key={index}
               png={info.png}
               title={info.title}
-              blerb={info.blerb}
-              link={info.link}
+              blerb={info.description}
             />
           ))}
         </div>

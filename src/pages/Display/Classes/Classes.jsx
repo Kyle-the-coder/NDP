@@ -1,10 +1,10 @@
 // ClassesPage.jsx
 import { useContext, useEffect, useRef } from "react";
-import { PageTitle } from "../../components/PageTitle/PageTitle";
-import { Card } from "../../components/Card/Card";
-import { Button } from "../../components/Button/Button";
-import { InfoContext } from "../../contexts/infoContext";
-import { scrollToSection } from "../../components/SmoothScroll";
+import { PageTitle } from "../../../components/PageTitle/PageTitle";
+import { Card } from "../../../components/Card/Card";
+import { Button } from "../../../components/Button/Button";
+import { InfoContext } from "../../../contexts/infoContext";
+import { scrollToSection } from "../../../components/SmoothScroll";
 import gsap from "gsap";
 
 import "./classes.css";
@@ -13,7 +13,6 @@ export default function ClassesPage() {
   const infoData = useContext(InfoContext);
   const classesData = infoData.classes.allClasses || [];
   const wrapperRef = useRef(null);
-
   // Fade in when page mounts
   useEffect(() => {
     gsap.to(wrapperRef.current, {
@@ -77,7 +76,6 @@ export default function ClassesPage() {
                 isClass={info.class}
                 title={info.title}
                 blerb={info.blerb}
-                link={info.link}
                 id={info.id}
                 onNav={handlePageLeave} // 👈 this triggers the fade-out
               />

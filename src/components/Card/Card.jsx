@@ -7,7 +7,6 @@ export function Card({
   title,
   blerb,
   png,
-  link,
   isClass = false,
   pointer = false,
   isEdit = false,
