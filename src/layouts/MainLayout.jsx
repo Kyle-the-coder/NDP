@@ -9,7 +9,10 @@ import { InfoContext } from "../contexts/infoContext";
 import { useLocation } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-
+import {
+  SelectedCardContext,
+  SelectedCardProvider,
+} from "../contexts/selectedCardContext";
 export function MainLayout() {
   const [infoData, setInfoData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -48,24 +51,26 @@ export function MainLayout() {
 
   return (
     <InfoContext.Provider value={infoData}>
-      <div className="main-container white-text">
-        <img src={mainBg} className="main-bg" />
+      <SelectedCardProvider>
+        <div className="main-container white-text">
+          <img src={mainBg} className="main-bg" />
 
-        <Nav />
+          <Nav />
 
-        {/* Main content */}
-        <div className="content-container" style={{ minHeight: "80vh" }}>
-          {loading && (
-            <div className="loader-container" style={{ minHeight: "100vh" }}>
-              <Loader />
-            </div>
-          )}
-          {/* No Suspense loader here; routes render instantly */}
-          <Outlet context={{ backState: location.state }} />
+          {/* Main content */}
+          <div className="content-container" style={{ minHeight: "80vh" }}>
+            {loading && (
+              <div className="loader-container" style={{ minHeight: "100vh" }}>
+                <Loader />
+              </div>
+            )}
+            {/* No Suspense loader here; routes render instantly */}
+            <Outlet context={{ backState: location.state }} />
+          </div>
+
+          <Footer />
         </div>
-
-        <Footer />
-      </div>
+      </SelectedCardProvider>
     </InfoContext.Provider>
   );
 }

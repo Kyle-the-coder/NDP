@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 .card-main.selected {
-  border: 2px solid #1e90ff; /* change this to the color you want */
+  border: 5px solid var(--yellow); /* change this to the color you want */
 }
 
 .card-x-button {
@@ -36,10 +36,14 @@
 .card-top > h1 {
   font-size: 3rem;
 }
+
 .card-img {
   width: 60px;
   height: 60px;
   margin-right: 10px;
+}
+.card-img.selected {
+  filter: hue-rotate(210deg) saturate(3) brightness(1.9);
 }
 
 .card-mid {

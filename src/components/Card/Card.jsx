@@ -64,8 +64,16 @@ export function Card({
       )}
 
       <div className="card-top">
-        {png && <img className="card-img" src={png} />}
-        <h1 className="anton-thin-font blue-text letter-space">{title}</h1>
+        {png && (
+          <img className={`card-img ${isSelected && "selected"}`} src={png} />
+        )}
+        <h1
+          className={`anton-thin-font ${
+            isSelected ? "yellow-text" : " blue-text"
+          } letter-space`}
+        >
+          {title}
+        </h1>
       </div>
 
       <div className="card-mid">
@@ -74,9 +82,21 @@ export function Card({
 
       <div className="card-bottom">
         {isClass ? (
-          <p className="urban-thin-font blue-text">More Info {`>`}</p>
+          <p
+            className={`urban-thin-font ${
+              isSelected ? "yellow-text" : "blue-text"
+            } `}
+          >
+            More Info {`>`}
+          </p>
         ) : (
-          <p className="urban-thin-font blue-text">Watch Video {`>`}</p>
+          <p
+            className={`urban-thin-font ${
+              isSelected ? "yellow-text" : "blue-text"
+            } `}
+          >
+            Watch Video {`>`}
+          </p>
         )}
       </div>
     </section>

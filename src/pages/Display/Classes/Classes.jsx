@@ -5,6 +5,7 @@ import { Card } from "../../../components/Card/Card";
 import { Button } from "../../../components/Button/Button";
 import { InfoContext } from "../../../contexts/infoContext";
 import { scrollToSection } from "../../../components/SmoothScroll";
+import { SelectedCardContext } from "../../../contexts/selectedCardContext";
 import gsap from "gsap";
 
 import "./classes.css";
@@ -13,6 +14,8 @@ export default function ClassesPage() {
   const infoData = useContext(InfoContext);
   const classesData = infoData.classes.allClasses || [];
   const wrapperRef = useRef(null);
+
+  const { selectedId, setSelectedId } = useContext(SelectedCardContext);
   // Fade in when page mounts
   useEffect(() => {
     gsap.to(wrapperRef.current, {
@@ -77,7 +80,9 @@ export default function ClassesPage() {
                 title={info.title}
                 blerb={info.blerb}
                 id={info.id}
-                onNav={handlePageLeave} // 👈 this triggers the fade-out
+                onNav={handlePageLeave}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
               />
             ))
           )}
