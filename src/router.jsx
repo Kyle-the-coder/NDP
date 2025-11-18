@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
       { path: "/classes", ...classesRoute },
       { path: "/singleClass/:id", ...singleClassRoute },
       { path: "/login", ...loginRoute },
-      { path: "/dancestyle", ...danceStylesRoute },
+      { path: "/singleStyle/:id", ...danceStylesRoute },
       {
         path: "/dashboard",
         element: <PrivateRoute>{dashboardRoute.element}</PrivateRoute>,

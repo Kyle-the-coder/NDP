@@ -1,9 +1,9 @@
-import createClassBg from "../../../assets/decor/imgs/NDPAboutBg.png";
+import spaceBg from "../../../assets/hero/NBDHeroBg.webp";
 import add from "../../../assets/icons/functIcons/free-style.png";
 import arrow from "../../../assets/icons/functIcons/arrow.png";
 import { Button } from "../../../components/Button/Button";
 import { Loader } from "../../../components/Loader/Loader";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { db } from "../../../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { Card } from "../../../components/Card/Card";
@@ -23,7 +23,8 @@ export default function CreateStyle() {
   const [videoLink, setVideoLink] = useState("");
   const [description, setDescription] = useState("");
   const [stylePng, setStylePng] = useState("");
-
+  const videoInputRef = useRef();
+  const pngInputRef = useRef();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [cardArray, setCardArray] = useState([]);
@@ -59,6 +60,7 @@ export default function CreateStyle() {
                   ? desc.split(" ").slice(0, 17).join(" ") + "..."
                   : desc,
               link: cls.link || "",
+              png: cls.png,
             };
           });
           setCardArray(stylesData);
@@ -177,6 +179,7 @@ export default function CreateStyle() {
 
       await updateDoc(DocRef, { allStyles: updatedStyles });
 
+      // Optionally update state first (if needed)
       const stylesData = updatedStyles.map((cls, idx) => {
         const desc = cls.description || "";
         return {
@@ -188,18 +191,25 @@ export default function CreateStyle() {
               ? desc.split(" ").slice(0, 17).join(" ") + "..."
               : desc,
           link: cls.link || "",
+          png: cls.png,
         };
       });
 
       setCardArray(stylesData);
 
+      // Reset inputs
       setStyle("");
       setDescription("");
       setVideoLink("");
       setStylePng("");
+      videoInputRef.current.value = "";
+      pngInputRef.current.value = "";
       setUploadProgress(0);
       setPngProgress(0);
       setSuccess(true);
+
+      // 🔄 Refresh the page after submit
+      window.location.reload();
     } catch (err) {
       console.error("Error adding style:", err);
     } finally {
@@ -277,6 +287,7 @@ export default function CreateStyle() {
               <input
                 type="file"
                 accept="video/*"
+                ref={videoInputRef}
                 className="input urban-thin-font"
                 onChange={handleVideoUpload}
                 required
@@ -285,12 +296,13 @@ export default function CreateStyle() {
               {/* Circular Upload */}
               {uploading && (
                 <div className="upload-circle-container">
+                  <img src={spaceBg} />
                   <div
                     className="upload-circle"
                     style={{
-                      background: `conic-gradient(#4fa3ff ${
+                      background: `conic-gradient(transparent ${
                         uploadProgress * 3.6
-                      }deg, #ddd 0deg)`,
+                      }deg, #3e3e3eff 0deg)`,
                     }}
                   >
                     <span className="upload-percent">{uploadProgress}%</span>
@@ -307,6 +319,7 @@ export default function CreateStyle() {
                 type="file"
                 accept="image/png,image/*"
                 className="input urban-thin-font"
+                ref={pngInputRef}
                 onChange={handlePngUpload}
                 required
               />
@@ -314,12 +327,13 @@ export default function CreateStyle() {
               {/* Circular PNG Upload */}
               {pngUploading && (
                 <div className="upload-circle-container">
+                  <img src={spaceBg} />
                   <div
                     className="upload-circle"
                     style={{
-                      background: `conic-gradient(#4fa3ff ${
+                      background: `conic-gradient(transparent ${
                         pngProgress * 3.6
-                      }deg, #ddd 0deg)`,
+                      }deg, #3e3e3eff 0deg)`,
                     }}
                   >
                     <span className="upload-percent">{pngProgress}%</span>
@@ -356,19 +370,16 @@ export default function CreateStyle() {
 
           <h1 className="anton-font blue-text size">Current Styles</h1>
           <div className="create-style-grid">
-            {cardArray.map((info, index) => {
-              console.log(info.png);
-              return (
-                <Card
-                  isClass={info.class}
-                  key={index}
-                  title={info.title}
-                  blerb={info.blerb}
-                  link={info.link}
-                  png={info.png}
-                />
-              );
-            })}
+            {cardArray.map((info, index) => (
+              <Card
+                isClass={info.class}
+                key={index}
+                title={info.title}
+                blerb={info.blerb}
+                link={info.link}
+                png={info.png}
+              />
+            ))}
           </div>
         </div>
       </div>

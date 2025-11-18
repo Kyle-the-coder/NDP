@@ -10,6 +10,7 @@ export function Card({
   isClass = false,
   pointer = false,
   isEdit = false,
+  isStyle = false,
   onDelete,
   id,
   onNav, // 👈 added
@@ -19,10 +20,22 @@ export function Card({
   const handleNavigate = () => {
     if (onNav) {
       onNav(() => {
-        navigate(isEdit ? `/editClass/${id}` : `/singleClass/${id}`);
+        navigate(
+          isEdit
+            ? `/editClass/${id}`
+            : isStyle
+            ? `/singleStyle/${id}`
+            : `/singleClass/${id}`
+        );
       });
     } else {
-      navigate(isEdit ? `/editClass/${id}` : `/singleClass/${id}`);
+      navigate(
+        isEdit
+          ? `/editClass/${id}`
+          : isStyle
+          ? `/singleStyle/${id}`
+          : `/singleClass/${id}`
+      );
     }
   };
 

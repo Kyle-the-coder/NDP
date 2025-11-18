@@ -2,22 +2,22 @@
 import { useParams } from "react-router-dom";
 import { useContext, useMemo, useEffect, useRef } from "react";
 import { InfoContext } from "../../../contexts/infoContext";
-import gsap from "gsap";
-
-import "./singleclass.css";
 import { PageTitle } from "../../../components/PageTitle/PageTitle";
-import { Button } from "../../../components/Button/Button";
+import gsap from "gsap";
+import "./dancestyle.css";
 
 export default function DanceStyle() {
   const { id } = useParams();
   const infoData = useContext(InfoContext);
   const wrapperRef = useRef(null);
-
+  console.log(infoData);
   // Compute class data only when context is ready
   const styleData = useMemo(() => {
     if (!infoData?.danceStyles?.allStyles) return null;
     return infoData.danceStyles.allStyles.find((c) => c.id === id) || null;
   }, [id, infoData]);
+
+  console.log(styleData);
 
   useEffect(() => {
     if (!styleData) return;
@@ -50,9 +50,14 @@ export default function DanceStyle() {
       style={{ opacity: 0 }}
     >
       <div className="dance-style-z-index">
-        <PageTitle title={styleData.style} blerb={styleData.description} />
+        <PageTitle title={styleData.title} blerb={styleData.description} />
 
-        <video src={styleData.videoLink} />
+        <video
+          controls
+          autoPlay
+          src={styleData.link}
+          className="dance-style-video"
+        />
       </div>
     </section>
   );

@@ -29,7 +29,7 @@ export default function Lp() {
       <Hero />
       <Vid />
       <Bio />
-      <Styles stylesInfo={stylesInfo.danceStyles.allStyles} />
+      <Styles stylesInfo={classData} />
     </section>
   );
 }

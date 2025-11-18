@@ -17,36 +17,6 @@ export function Styles({ stylesInfo }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const cardArray = [
-    {
-      png: popping,
-      title: "Popping",
-      blerb:
-        "Learn the fundamentals of popping, muscle control, and rhythmic precision",
-      link: "",
-    },
-    {
-      png: tutting,
-      title: "Tutting",
-      blerb: "Master geometric arm angles and intricate hand contorl sequences",
-      link: "",
-    },
-    {
-      png: waving,
-      title: "Waving",
-      blerb:
-        "Develop fluid motion techniques that travel from fingertips to full body.",
-      link: "",
-    },
-    {
-      png: freestyle,
-      title: "Freestyle",
-      blerb:
-        "Build confidence through structured freestyle drills and cyphers.",
-      link: "",
-    },
-  ];
-  console.log(stylesInfo);
 
   return (
     <section className="display-column">
@@ -60,6 +30,8 @@ export function Styles({ stylesInfo }) {
               png={info.png}
               title={info.title}
               blerb={info.description}
+              isStyle={true}
+              id={info.id}
             />
           ))}
         </div>
