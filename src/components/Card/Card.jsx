@@ -43,6 +43,7 @@ export function Card({
     <section
       className={`card-main ${pointer && "pointer"}`}
       onClick={handleNavigate}
+      id={id}
     >
       {isEdit && (
         <img

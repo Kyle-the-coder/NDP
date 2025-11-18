@@ -1,8 +1,8 @@
-// SingleClass.jsx
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useMemo, useEffect, useRef } from "react";
 import { InfoContext } from "../../../contexts/infoContext";
 import { PageTitle } from "../../../components/PageTitle/PageTitle";
+import backArrow from "../../../assets/icons/functIcons/arrow.png";
 import gsap from "gsap";
 import "./dancestyle.css";
 
@@ -10,14 +10,26 @@ export default function DanceStyle() {
   const { id } = useParams();
   const infoData = useContext(InfoContext);
   const wrapperRef = useRef(null);
-  console.log(infoData);
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    // Go back 1 page
+    navigate(-1);
+
+    // After navigating, wait for the page to render then scroll
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 250); // small delay to ensure DOM is ready
+  };
+
   // Compute class data only when context is ready
   const styleData = useMemo(() => {
     if (!infoData?.danceStyles?.allStyles) return null;
     return infoData.danceStyles.allStyles.find((c) => c.id === id) || null;
   }, [id, infoData]);
-
-  console.log(styleData);
 
   useEffect(() => {
     if (!styleData) return;
@@ -49,6 +61,18 @@ export default function DanceStyle() {
       ref={wrapperRef}
       style={{ opacity: 0 }}
     >
+      <img
+        src={backArrow}
+        onClick={handleBack}
+        style={{
+          width: "40px",
+          position: "absolute",
+          top: "4%",
+          left: "4%",
+          cursor: "pointer",
+        }}
+      />
+
       <div className="dance-style-z-index">
         <PageTitle title={styleData.title} blerb={styleData.description} />
 
