@@ -7,7 +7,7 @@ import freestyle from "../../../assets/icons/decorIcons/FreestyleIconTB.png";
 import "./styles.css";
 import { Card } from "../../../components/Card/Card";
 
-export function Styles({ stylesInfo }) {
+export function Styles({ stylesInfo, onNav }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const contentRefs = useRef([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -32,6 +32,7 @@ export function Styles({ stylesInfo }) {
               blerb={info.description}
               isStyle={true}
               id={info.id}
+              onNav={onNav}
             />
           ))}
         </div>

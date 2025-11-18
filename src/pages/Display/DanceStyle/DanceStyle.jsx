@@ -52,12 +52,7 @@ export default function DanceStyle() {
       <div className="dance-style-z-index">
         <PageTitle title={styleData.title} blerb={styleData.description} />
 
-        <video
-          controls
-          autoPlay
-          src={styleData.link}
-          className="dance-style-video"
-        />
+        <video controls src={styleData.link} className="dance-style-video" />
       </div>
     </section>
   );

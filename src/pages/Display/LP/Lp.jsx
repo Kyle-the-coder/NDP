@@ -5,6 +5,7 @@ import { Vid } from "../../../sections/LandingSections/Vid/Vid";
 import { useContext, useEffect, useMemo, useRef } from "react";
 import { InfoContext } from "../../../contexts/infoContext";
 import gsap from "gsap";
+import { scrollToSection } from "../../../components/SmoothScroll";
 
 export default function Lp() {
   const stylesInfo = useContext(InfoContext);
@@ -24,12 +25,25 @@ export default function Lp() {
     });
   }, []);
 
+  // Fade-out transition handler passed to cards
+  const handlePageLeave = (navigateCallback) => {
+    gsap.to(wrapperRef.current, {
+      opacity: 0,
+      duration: 1,
+      ease: "power2.in",
+      onComplete: () => {
+        scrollToSection("#nav");
+        setTimeout(() => navigateCallback(), 700);
+      },
+    });
+  };
+
   return (
     <section className="display-column" ref={wrapperRef} style={{ opacity: 0 }}>
       <Hero />
       <Vid />
       <Bio />
-      <Styles stylesInfo={classData} />
+      <Styles stylesInfo={classData} onNav={handlePageLeave} />
     </section>
   );
 }

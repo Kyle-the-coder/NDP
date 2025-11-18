@@ -10,7 +10,7 @@ import { dashboardRoute } from "./pages/Display/Dashboard/dashboardRoute.jsx";
 import { createClassRoute } from "./pages/Creates/CreateClass/createClassRoute.jsx";
 import { editClassesRoute } from "./pages/Edits/EditClasses/editClassesRoute.jsx";
 import { singleClassRoute } from "./pages/Display/SingleClass/singleClassRoute.jsx";
-import { danceStylesRoute } from "./pages/Display/DanceStyles/danceStylesRoute.jsx";
+import { danceStyleRoute } from "./pages/Display/DanceStyle/danceStyleRoute.jsx";
 import { createStyleRoute } from "./pages/Creates/CreateStyle/createStyleRoute.jsx";
 
 export const router = createBrowserRouter([
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
       { path: "/classes", ...classesRoute },
       { path: "/singleClass/:id", ...singleClassRoute },
       { path: "/login", ...loginRoute },
-      { path: "/singleStyle/:id", ...danceStylesRoute },
+      { path: "/singleStyle/:id", ...danceStyleRoute },
       {
         path: "/dashboard",
         element: <PrivateRoute>{dashboardRoute.element}</PrivateRoute>,
