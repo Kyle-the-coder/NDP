@@ -1,18 +1,27 @@
 // SingleClass.jsx
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useMemo, useEffect, useRef } from "react";
 import { InfoContext } from "../../../contexts/infoContext";
-import gsap from "gsap";
-
-import "./singleclass.css";
 import { PageTitle } from "../../../components/PageTitle/PageTitle";
 import { Button } from "../../../components/Button/Button";
+import backArrow from "../../../assets/icons/functIcons/arrow.png";
+import gsap from "gsap";
+import "./singleclass.css";
 
 export default function SingleClass() {
   const { id } = useParams();
   const infoData = useContext(InfoContext);
   const wrapperRef = useRef(null);
 
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 250);
+  };
   // Compute class data only when context is ready
   const classData = useMemo(() => {
     if (!infoData?.classes?.allClasses) return null;
@@ -49,6 +58,18 @@ export default function SingleClass() {
       ref={wrapperRef}
       style={{ opacity: 0 }}
     >
+      <img
+        src={backArrow}
+        onClick={handleBack}
+        style={{
+          width: "40px",
+          position: "absolute",
+          top: "4%",
+          left: "4%",
+          cursor: "pointer",
+        }}
+      />
+
       <div className="single-class-z-index">
         <h1 className="urban-thin-font blue-text">
           Ages {classData.startAge}-{classData.endAge}

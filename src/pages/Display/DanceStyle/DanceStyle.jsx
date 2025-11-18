@@ -17,11 +17,7 @@ export default function DanceStyle() {
   const [isReady, setIsReady] = useState(false);
 
   const handleBack = () => {
-    navigate(-1);
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 250);
+    navigate("/", { state: { fromBack: true, targetId: id } });
   };
 
   // Find correct style

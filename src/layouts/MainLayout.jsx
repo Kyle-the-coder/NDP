@@ -6,13 +6,14 @@ import { Loader } from "../components/Loader/Loader";
 
 import mainBg from "../assets/decor/imgs/NDPAboutBg.png";
 import { InfoContext } from "../contexts/infoContext";
-
+import { useLocation } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 
 export function MainLayout() {
   const [infoData, setInfoData] = useState({});
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchNdpData() {
@@ -60,7 +61,7 @@ export function MainLayout() {
             </div>
           )}
           {/* No Suspense loader here; routes render instantly */}
-          <Outlet />
+          <Outlet context={{ backState: location.state }} />
         </div>
 
         <Footer />
