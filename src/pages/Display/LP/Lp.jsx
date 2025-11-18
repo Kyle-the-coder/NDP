@@ -11,6 +11,10 @@ import {
 } from "react-router-dom";
 import { scrollToSection } from "../../../components/SmoothScroll";
 import gsap from "gsap";
+import {
+  SelectedCardContext,
+  SelectedCardProvider,
+} from "../../../contexts/selectedCardContext";
 
 export default function Lp() {
   const stylesInfo = useContext(InfoContext);
@@ -71,10 +75,12 @@ export default function Lp() {
 
   return (
     <section className="display-column" ref={wrapperRef} style={{ opacity: 0 }}>
-      <Hero />
-      <Vid />
-      <Bio />
-      <Styles stylesInfo={classData} onNav={handlePageLeave} />
+      <SelectedCardProvider>
+        <Hero />
+        <Vid />
+        <Bio />
+        <Styles stylesInfo={classData} onNav={handlePageLeave} />
+      </SelectedCardProvider>
     </section>
   );
 }

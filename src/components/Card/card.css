@@ -14,6 +14,9 @@
   position: relative;
   cursor: pointer;
 }
+.card-main.selected {
+  border: 2px solid #1e90ff; /* change this to the color you want */
+}
 
 .card-x-button {
   width: 40px;

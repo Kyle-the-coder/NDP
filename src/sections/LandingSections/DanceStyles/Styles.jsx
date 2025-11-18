@@ -1,9 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useContext, useRef, useState } from "react";
 import stylesBg from "../../../assets/hero/NBDHeroBg.webp";
-import popping from "../../../assets/icons/decorIcons/PoppingIconTB.png";
-import tutting from "../../../assets/icons/decorIcons/TuttingIconTB.png";
-import waving from "../../../assets/icons/decorIcons/WavingIconTB.png";
-import freestyle from "../../../assets/icons/decorIcons/FreestyleIconTB.png";
+import { SelectedCardContext } from "../../../contexts/selectedCardContext";
 import "./styles.css";
 import { Card } from "../../../components/Card/Card";
 
@@ -11,7 +8,9 @@ export function Styles({ stylesInfo, onNav }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const contentRefs = useRef([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { selectedId, setSelectedId } = useContext(SelectedCardContext);
 
+  console.log(selectedId);
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -33,6 +32,8 @@ export function Styles({ stylesInfo, onNav }) {
               isStyle={true}
               id={info.id}
               onNav={onNav}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
             />
           ))}
         </div>

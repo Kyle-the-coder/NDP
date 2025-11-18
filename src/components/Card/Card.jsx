@@ -1,9 +1,9 @@
-// Card.jsx
 import { useNavigate } from "react-router-dom";
 import x from "../../assets/icons/functIcons/x-button.png";
 import "./card.css";
 
 export function Card({
+  id,
   title,
   blerb,
   png,
@@ -12,12 +12,17 @@ export function Card({
   isEdit = false,
   isStyle = false,
   onDelete,
-  id,
-  onNav, // 👈 added
+  onNav, // fade-out handler
+  selectedId, // currently selected card ID from parent
+  setSelectedId, // setter function from parent
 }) {
   const navigate = useNavigate();
+  const isSelected = selectedId === id; // determine if this card is selected
 
   const handleNavigate = () => {
+    // Set this card as selected
+    setSelectedId(id);
+
     if (onNav) {
       onNav(() => {
         navigate(
@@ -41,9 +46,11 @@ export function Card({
 
   return (
     <section
-      className={`card-main ${pointer && "pointer"}`}
-      onClick={handleNavigate}
       id={id}
+      className={`card-main ${pointer ? "pointer" : ""} ${
+        isSelected ? "selected" : ""
+      }`}
+      onClick={handleNavigate}
     >
       {isEdit && (
         <img
