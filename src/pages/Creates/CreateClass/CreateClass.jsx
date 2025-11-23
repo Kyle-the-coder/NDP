@@ -4,12 +4,15 @@ import add from "../../../assets/icons/functIcons/new.png";
 import arrow from "../../../assets/icons/functIcons/arrow.png";
 import { Button } from "../../../components/Button/Button";
 import { Loader } from "../../../components/Loader/Loader";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { db } from "../../../firebaseConfig";
 import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { Card } from "../../../components/Card/Card";
 import { useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
+import { SelectedCardContext } from "../../../contexts/selectedCardContext";
+import gsap from "gsap";
+import { scrollToSection } from "../../../components/SmoothScroll";
 
 export default function CreateClass() {
   const [classTitle, setClassTitle] = useState("");
@@ -21,6 +24,10 @@ export default function CreateClass() {
   const [classStartDate, setClassStartDate] = useState("");
   const [classEndDate, setClassEndDate] = useState("");
   const [classLink, setClassLink] = useState("");
+
+  // Styles and Functionality for cards
+  const { selectedId, setSelectedId } = useContext(SelectedCardContext);
+  const wrapperRef = useRef(null);
 
   // New states for the added fields
   const [style, setStyle] = useState("");
@@ -35,6 +42,18 @@ export default function CreateClass() {
 
   // Reference to the single document /ndp/classes
   const classesDocRef = doc(db, "ndp", "classes");
+
+  const handlePageLeave = (navigateCallback) => {
+    gsap.to(wrapperRef.current, {
+      opacity: 0,
+      duration: 1,
+      ease: "power2.in",
+      onComplete: () => {
+        scrollToSection("#nav");
+        setTimeout(() => navigateCallback(), 700);
+      },
+    });
+  };
 
   // Load existing classes from the allClasses array in the document
   useEffect(() => {
@@ -144,7 +163,7 @@ export default function CreateClass() {
   };
 
   return (
-    <section className="create-class-main">
+    <section className="create-class-main" ref={wrapperRef}>
       <div className="back-arrow-container">
         <img
           src={arrow}
@@ -463,6 +482,10 @@ export default function CreateClass() {
                 title={info.title}
                 blerb={info.blerb}
                 link={info.link}
+                id={info.id}
+                onNav={handlePageLeave}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
               />
             ))}
           </div>

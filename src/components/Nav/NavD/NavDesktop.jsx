@@ -12,6 +12,7 @@ export function NavDesktop({
   handleMouseLeave,
   handleScrollTo,
   navigate,
+  handleEditor,
 }) {
   return (
     <>
@@ -21,6 +22,7 @@ export function NavDesktop({
           onClick={() => {
             navigate("/");
             handleMouseEnter(0);
+            handleEditor();
           }}
         />
         <div className="links">
@@ -28,7 +30,10 @@ export function NavDesktop({
             <div
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
-              onClick={() => handleScrollTo(link.link)}
+              onClick={() => {
+                handleScrollTo(link.link);
+                handleEditor();
+              }}
               key={link.linkName}
               className="link-container"
             >

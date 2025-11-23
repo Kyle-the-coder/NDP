@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavPhone } from "./NavP/NavPhone";
 import { NavDesktop } from "./NavD/NavDesktop";
@@ -7,12 +7,14 @@ import navBorder from "../../assets/decor/lines/navBorder.svg";
 import navPhoneBorder from "../../assets/decor/lines/navPhoneBorder.svg";
 import gsap from "gsap";
 import "./nav.css";
+import { IsEditContext } from "../../contexts/isEditContext";
 
 export function Nav() {
   const [hoverIndex, setHoverIndex] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isHamburgerActive, setIsHamburgerActive] = useState(null);
   const [isAnimationActive, setIsAnimtionActive] = useState(null);
+  const isEdit = useContext(IsEditContext);
   const navigate = useNavigate();
 
   const links = [
@@ -24,6 +26,9 @@ export function Nav() {
 
   const handleMouseEnter = useCallback((index) => setHoverIndex(index), []);
   const handleMouseLeave = useCallback(() => setHoverIndex(null), []);
+  function handleEditor() {
+    isEdit.setIsEdit(null);
+  }
 
   function handleActivateHamburger() {
     if (!isHamburgerActive) {
@@ -93,6 +98,7 @@ export function Nav() {
               navigate={navigate}
               handleActivateHamburger={handleActivateHamburger}
               isAnimationActive={isAnimationActive}
+              handleEditor={handleEditor}
             />
           ) : (
             <NavDesktop
@@ -102,6 +108,7 @@ export function Nav() {
               handleMouseLeave={handleMouseLeave}
               handleScrollTo={handleScrollTo}
               navigate={navigate}
+              handleEditor={handleEditor}
             />
           )}
         </div>
@@ -118,6 +125,7 @@ export function Nav() {
                     onClick={() => {
                       handleMouseEnter(index);
                       handleScrollTo(link.link);
+                      handleEditor();
                     }}
                   >
                     {link.linkName}

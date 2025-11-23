@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import x from "../../assets/icons/functIcons/x-button.png";
 import "./card.css";
+import { useEffect } from "react";
 
 export function Card({
   id,
@@ -15,9 +16,15 @@ export function Card({
   onNav, // fade-out handler
   selectedId, // currently selected card ID from parent
   setSelectedId, // setter function from parent
+  editor,
+  editLink,
 }) {
   const navigate = useNavigate();
   const isSelected = selectedId === id; // determine if this card is selected
+
+  useEffect(() => {
+    editor && editor.setIsEdit(editLink);
+  }, []);
 
   const handleNavigate = () => {
     // Set this card as selected

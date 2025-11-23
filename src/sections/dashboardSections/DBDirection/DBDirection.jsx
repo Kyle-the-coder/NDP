@@ -55,7 +55,9 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/createStyle");
+          navigate("/createStyle", {
+            state: { fromBack: false, targetId: null },
+          });
           window.scrollTo(0, 0);
         }}
       >

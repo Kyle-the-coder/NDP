@@ -10,7 +10,6 @@ export function Styles({ stylesInfo, onNav }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { selectedId, setSelectedId } = useContext(SelectedCardContext);
 
-  console.log(selectedId);
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);

@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useMemo, useEffect, useRef, useState } from "react";
 import { InfoContext } from "../../../contexts/infoContext";
 import { PageTitle } from "../../../components/PageTitle/PageTitle";
+import { IsEditContext } from "../../../contexts/isEditContext";
 import backArrow from "../../../assets/icons/functIcons/arrow.png";
 import gsap from "gsap";
 import "./dancestyle.css";
@@ -10,6 +11,8 @@ export default function DanceStyle() {
   const { id } = useParams();
   const navigate = useNavigate();
   const infoData = useContext(InfoContext);
+  const isEdit = useContext(IsEditContext);
+  console.log(isEdit, "style");
 
   const wrapperRef = useRef(null);
   const videoRef = useRef(null);
@@ -17,7 +20,9 @@ export default function DanceStyle() {
   const [isReady, setIsReady] = useState(false);
 
   const handleBack = () => {
-    navigate("/", { state: { fromBack: true, targetId: id } });
+    isEdit.isEdit === "/createStyle"
+      ? navigate("/createStyle", { state: { fromBack: true, targetId: id } })
+      : navigate("/", { state: { fromBack: true, targetId: id } });
   };
 
   // Find correct style

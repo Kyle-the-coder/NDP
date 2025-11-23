@@ -3,11 +3,16 @@ import add from "../../../assets/icons/functIcons/free-style.png";
 import arrow from "../../../assets/icons/functIcons/arrow.png";
 import { Button } from "../../../components/Button/Button";
 import { Loader } from "../../../components/Loader/Loader";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { db } from "../../../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { Card } from "../../../components/Card/Card";
-import { useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  useNavigationType,
+  useOutletContext,
+} from "react-router-dom";
+import gsap from "gsap";
 import "./createstyle.css";
 
 // 🔥 Storage imports
@@ -17,6 +22,9 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { SelectedCardContext } from "../../../contexts/selectedCardContext";
+import { scrollToSection } from "../../../components/SmoothScroll";
+import { IsEditContext } from "../../../contexts/isEditContext";
 
 export default function CreateStyle() {
   const [style, setStyle] = useState("");
@@ -29,6 +37,13 @@ export default function CreateStyle() {
   const [success, setSuccess] = useState(false);
   const [cardArray, setCardArray] = useState([]);
 
+  // Styles and Functionality for cards
+  const { selectedId, setSelectedId } = useContext(SelectedCardContext);
+  const wrapperRef = useRef(null);
+  const isEdit = useContext(IsEditContext);
+  const { backState } = useOutletContext();
+  const navigationType = useNavigationType();
+
   // Upload progress states
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
@@ -36,11 +51,82 @@ export default function CreateStyle() {
   // PNG upload progress states
   const [pngProgress, setPngProgress] = useState(0);
   const [pngUploading, setPngUploading] = useState(false);
+  console.log(backState);
+  console.log(navigationType);
 
   const navigate = useNavigate();
 
   const storage = getStorage();
   const DocRef = doc(db, "ndp", "danceStyles");
+
+  const handlePageLeave = (navigateCallback) => {
+    gsap.to(wrapperRef.current, {
+      opacity: 0,
+      duration: 1,
+      ease: "power2.in",
+      onComplete: () => {
+        scrollToSection("#nav");
+        setTimeout(() => navigateCallback(), 700);
+      },
+    });
+  };
+  // Hide wrapper on mount
+  useEffect(() => {
+    if (wrapperRef.current) {
+      gsap.set(wrapperRef.current, { opacity: 0 });
+    }
+  }, []);
+
+  useEffect(() => {
+    // Must wait for data AND wrapperRef
+    if (!wrapperRef.current) return;
+
+    // If navigating normally (not back), just fade in normally
+    if (!backState?.fromBack || navigationType === "POP") {
+      gsap.to(wrapperRef.current, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+      return;
+    }
+
+    // If coming from BACK navigation...
+    if (cardArray.length === 0) return; // wait for data
+
+    const targetId = backState.targetId;
+    const el = document.getElementById(targetId);
+
+    if (!el) {
+      // No specific target — just fade in
+      gsap.to(wrapperRef.current, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+      return;
+    }
+
+    // Scroll instantly (wrapper still hidden)
+    el.scrollIntoView({ behavior: "instant", block: "center" });
+
+    // Fade in page wrapper
+    gsap.to(wrapperRef.current, {
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+
+    // Animate the target card separately
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+    );
+
+    // Clear state so refresh doesn’t repeat animation
+    navigate(window.location.pathname, { replace: true, state: {} });
+  }, [backState, navigationType, cardArray, navigate]);
 
   // Load existing styles
   useEffect(() => {
@@ -218,13 +304,13 @@ export default function CreateStyle() {
   };
 
   return (
-    <section className="create-style-main">
+    <section className="create-style-main" ref={wrapperRef}>
       <div className="back-arrow-container">
         <img
           src={arrow}
           className="back-arrow"
           onClick={() => {
-            navigate("/dashboard");
+            navigate("/dashboard", { state: {} });
             window.scrollTo(0, 0);
           }}
         />
@@ -372,12 +458,17 @@ export default function CreateStyle() {
           <div className="create-style-grid">
             {cardArray.map((info, index) => (
               <Card
-                isClass={info.class}
                 key={index}
-                title={info.title}
-                blerb={info.blerb}
-                link={info.link}
                 png={info.png}
+                title={info.title}
+                blerb={info.description}
+                isStyle={true}
+                id={info.id}
+                onNav={handlePageLeave}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
+                editor={isEdit}
+                editLink={"/createStyle"}
               />
             ))}
           </div>
