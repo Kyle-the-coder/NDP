@@ -28,10 +28,20 @@
   background-color: var(--dark-blue);
 }
 
-.db-direction-container:hover {
-  scale: 1.01;
+.yellow:hover {
+  transform: scale(1.01);
   background-color: rgb(2, 2, 163);
-  filter: drop-shadow(0px 0px 15px white);
+  filter: drop-shadow(0px 0px 15px var(--yellow));
+}
+.purple:hover {
+  transform: scale(1.01);
+  background-color: rgb(2, 2, 163);
+  filter: drop-shadow(0px 0px 15px var(--purple));
+}
+.blue:hover {
+  transform: scale(1.01);
+  background-color: rgb(2, 2, 163);
+  filter: drop-shadow(0px 0px 15px var(--neon-blue));
 }
 
 .db-direction-container h1 {

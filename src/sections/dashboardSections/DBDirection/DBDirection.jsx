@@ -41,7 +41,7 @@ export function DBDirection({ wrapperRef }) {
       className="display-column z-index"
     >
       <div
-        className="db-direction-container "
+        className="db-direction-container yellow"
         onClick={(e) => {
           e.preventDefault();
           handlePageLeave(() => {
@@ -58,7 +58,7 @@ export function DBDirection({ wrapperRef }) {
         <img src={add} />
       </div>
       <div
-        className="db-direction-container "
+        className="db-direction-container yellow"
         onClick={(e) => {
           e.preventDefault();
           handlePageLeave(() => {
@@ -75,7 +75,7 @@ export function DBDirection({ wrapperRef }) {
         <img src={edit} />
       </div>{" "}
       <div
-        className="db-direction-container "
+        className="db-direction-container purple"
         onClick={(e) => {
           e.preventDefault();
           handlePageLeave(() => {
@@ -92,7 +92,7 @@ export function DBDirection({ wrapperRef }) {
         <img src={dance} />
       </div>
       <div
-        className="db-direction-container "
+        className="db-direction-container purple"
         onClick={(e) => {
           e.preventDefault();
           navigate("/editStyles", {
@@ -107,7 +107,7 @@ export function DBDirection({ wrapperRef }) {
         <img src={dance} />
       </div>
       <div
-        className="db-direction-container "
+        className="db-direction-container blue"
         onClick={(e) => {
           e.preventDefault();
           navigate("/editImg", {

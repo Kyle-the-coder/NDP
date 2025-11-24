@@ -17,17 +17,17 @@ export function DBHero() {
     <section className="db-hero-main-container">
       {windowWidth <= 600 ? (
         <>
-          <h1 className="outfit-font ">Welcome</h1>
-          <h1 className="outfit-font green-text">To Your</h1>
-          <h1 className="outfit-font green-text">Dashboard</h1>
+          <h1 className="urban-font ">Welcome</h1>
+          <h1 className="urban-font green-text">To Your</h1>
+          <h1 className="urban-font green-text">Dashboard</h1>
         </>
       ) : (
         <>
-          <h1 className="outfit-font green-text">Welcome</h1>
-          <h1 className="outfit-font green-text">To Your</h1>
+          <h1 className="urban-font green-text">Welcome</h1>
+          <h1 className="urban-font green-text">To Your</h1>
           <h1
             style={{ marginBottom: "10px" }}
-            className="outfit-font green-text"
+            className="urban-font green-text"
           >
             Dashboard
           </h1>
