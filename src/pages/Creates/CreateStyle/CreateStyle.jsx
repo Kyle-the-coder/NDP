@@ -137,11 +137,12 @@ export default function CreateStyle() {
           const data = docSnap.data();
           const stylesData = (data.allStyles || []).map((cls, idx) => {
             const desc = cls.description || "";
+            console.log("desc", desc);
             return {
               id: cls.id || idx.toString(),
               class: true,
               title: cls.title,
-              blerb:
+              description:
                 desc.split(" ").length > 17
                   ? desc.split(" ").slice(0, 17).join(" ") + "..."
                   : desc,
@@ -302,7 +303,7 @@ export default function CreateStyle() {
       setLoading(false);
     }
   };
-
+  console.log(cardArray);
   return (
     <section className="create-style-main" ref={wrapperRef}>
       <div className="back-arrow-container">

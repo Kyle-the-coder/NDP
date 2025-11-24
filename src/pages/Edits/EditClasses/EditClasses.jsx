@@ -1,11 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import arrow from "../../../assets/icons/functIcons/arrow.png";
 
 import { db } from "../../../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import "./editClasses.css";
 import { Card } from "../../../components/Card/Card";
-import { useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  useNavigationType,
+  useOutletContext,
+} from "react-router-dom";
+import { IsEditContext } from "../../../contexts/isEditContext";
+import { SelectedCardContext } from "../../../contexts/selectedCardContext";
 
 export default function EditClasses() {
   const [cardArray, setCardArray] = useState([]);
@@ -14,6 +20,13 @@ export default function EditClasses() {
 
   const classesDocRef = doc(db, "ndp", "classes");
   const navigate = useNavigate();
+
+  //Card States and functionality
+  const { selectedId, setSelectedId } = useContext(SelectedCardContext);
+  const wrapperRef = useRef(null);
+  const isEdit = useContext(IsEditContext);
+  const { backState } = useOutletContext();
+  const navigationType = useNavigationType();
 
   useEffect(() => {
     fetchClasses();
