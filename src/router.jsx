@@ -12,6 +12,7 @@ import { editClassesRoute } from "./pages/Edits/EditClasses/editClassesRoute.jsx
 import { singleClassRoute } from "./pages/Display/SingleClass/singleClassRoute.jsx";
 import { danceStyleRoute } from "./pages/Display/DanceStyle/danceStyleRoute.jsx";
 import { createStyleRoute } from "./pages/Creates/CreateStyle/createStyleRoute.jsx";
+import { editClassRoute } from "./pages/Edits/EditClass/editClassRoute.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -46,10 +47,10 @@ export const router = createBrowserRouter([
         element: <PrivateRoute>{editClassesRoute.element}</PrivateRoute>,
       },
 
-      // {
-      //   path: "/editClass/:id",
-      //   element: <PrivateRoute>{editClassRoute.element}</PrivateRoute>,
-      // },
+      {
+        path: "/editClass/:id",
+        element: <PrivateRoute>{editClassRoute.element}</PrivateRoute>,
+      },
     ],
   },
 ]);
