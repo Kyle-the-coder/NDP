@@ -39,17 +39,16 @@ export const router = createBrowserRouter([
         element: <PrivateRoute>{editClassesRoute.element}</PrivateRoute>,
       },
       {
+        path: "/editClass/:id",
+        element: <PrivateRoute>{editClassRoute.element}</PrivateRoute>,
+      },
+      {
         path: "/createStyle",
         element: <PrivateRoute>{createStyleRoute.element}</PrivateRoute>,
       },
       {
         path: "/editStyles",
         element: <PrivateRoute>{editClassesRoute.element}</PrivateRoute>,
-      },
-
-      {
-        path: "/editClass/:id",
-        element: <PrivateRoute>{editClassRoute.element}</PrivateRoute>,
       },
     ],
   },

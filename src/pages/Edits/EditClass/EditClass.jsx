@@ -1,20 +1,26 @@
-import "./createclass.css";
-import createClassBg from "../../../assets/decor/imgs/NDPAboutBg.png";
-import add from "../../../assets/icons/functIcons/new.png";
-import arrow from "../../../assets/icons/functIcons/arrow.png";
 import { Button } from "../../../components/Button/Button";
 import { Loader } from "../../../components/Loader/Loader";
 import { useContext, useEffect, useRef, useState } from "react";
 import { db } from "../../../firebaseConfig";
-import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { Card } from "../../../components/Card/Card";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import { SelectedCardContext } from "../../../contexts/selectedCardContext";
-import gsap from "gsap";
 import { scrollToSection } from "../../../components/SmoothScroll";
+import createClassBg from "../../../assets/decor/imgs/NDPAboutBg.png";
+import edit from "../../../assets/icons/functIcons/edit.png";
+import arrow from "../../../assets/icons/functIcons/arrow.png";
+import gsap from "gsap";
+import { IsEditContext } from "../../../contexts/isEditContext";
+import "./editclass.css";
+import SingleClass from "../../Display/SingleClass/SingleClass";
 
 export default function EditClass() {
+  // -------- ROUTER PARAM --------
+  const { id } = useParams();
+
+  // -------- FORM STATE --------
   const [classTitle, setClassTitle] = useState("");
   const [classDescription, setClassDescription] = useState("");
   const [classStartAge, setClassStartAge] = useState("");
@@ -25,11 +31,6 @@ export default function EditClass() {
   const [classEndDate, setClassEndDate] = useState("");
   const [classLink, setClassLink] = useState("");
 
-  // Styles and Functionality for cards
-  const { selectedId, setSelectedId } = useContext(SelectedCardContext);
-  const wrapperRef = useRef(null);
-
-  // New states for the added fields
   const [style, setStyle] = useState("");
   const [level, setLevel] = useState("");
   const [active, setActive] = useState(true);
@@ -38,11 +39,20 @@ export default function EditClass() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [cardArray, setCardArray] = useState([]);
-  const navigate = useNavigate();
 
-  // Reference to the single document /ndp/classes
+  // NEW: loading states
+  const [classesLoaded, setClassesLoaded] = useState(false);
+  const [singleClassLoaded, setSingleClassLoaded] = useState(false);
+  const [pageReady, setPageReady] = useState(false);
+
+  // -------- CONTEXT --------
+  const { selectedId, setSelectedId } = useContext(SelectedCardContext);
+  const { isEdit, setIsEdit } = useContext(IsEditContext);
+  const navigate = useNavigate();
+  const wrapperRef = useRef(null);
   const classesDocRef = doc(db, "ndp", "classes");
 
+  // -------- ANIMATION ON LEAVE --------
   const handlePageLeave = (navigateCallback) => {
     gsap.to(wrapperRef.current, {
       opacity: 0,
@@ -55,7 +65,17 @@ export default function EditClass() {
     });
   };
 
-  // Load existing classes from the allClasses array in the document
+  useEffect(() => {
+    setIsEdit("/editClasses");
+  }, []);
+
+  const handleBack = () => {
+    isEdit === "/editClasses"
+      ? navigate("/editClasses", { state: { fromBack: true, targetId: id } })
+      : navigate("/dashboard", { state: { fromBack: true, targetId: id } });
+  };
+
+  // -------- LOAD ALL CLASSES FOR PREVIEW CARDS --------
   useEffect(() => {
     async function fetchClasses() {
       try {
@@ -76,118 +96,142 @@ export default function EditClass() {
             };
           });
           setCardArray(classesData);
-        } else {
-          setCardArray([]);
         }
       } catch (err) {
         console.error("Error fetching classes: ", err);
+      } finally {
+        setClassesLoaded(true);
       }
     }
     fetchClasses();
   }, []);
 
+  // -------- LOAD CLASS TO EDIT --------
+  useEffect(() => {
+    async function fetchClassToEdit() {
+      try {
+        const snap = await getDoc(classesDocRef);
+        if (!snap.exists()) return;
+
+        const all = snap.data().allClasses || [];
+        const found = all.find((cls) => cls.id === id);
+        if (!found) return;
+
+        // PREPOPULATE FORM FIELDS
+        setClassTitle(found.title || "");
+        setClassDescription(found.description || "");
+        setClassStartAge(found.startAge || "");
+        setClassEndAge(found.endAge || "");
+        setClassPrice(found.price || "");
+        setClassPriceParam(found.priceParam || "");
+        setClassStartDate(found.startDate || "");
+        setClassEndDate(found.endDate || "");
+        setStyle(found.style || "");
+        setLevel(found.level || "");
+        setActive(found.active ?? true);
+        setAgeGroup(found.ageGroup || "");
+        setClassLink(found.classLink || "");
+      } catch (err) {
+        console.error("Error loading class:", err);
+      } finally {
+        setSingleClassLoaded(true);
+      }
+    }
+
+    fetchClassToEdit();
+  }, [id]);
+
+  // -------- FADE IN WHEN EVERYTHING IS LOADED --------
+  useEffect(() => {
+    if (classesLoaded && singleClassLoaded && wrapperRef.current) {
+      gsap.to(wrapperRef.current, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+      setPageReady(true);
+    }
+  }, [classesLoaded, singleClassLoaded]);
+
+  // -------- UPDATE CLASS --------
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
 
     try {
-      const docSnap = await getDoc(classesDocRef);
-      let currentClasses = [];
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        currentClasses = data.allClasses || [];
-      }
+      const snap = await getDoc(classesDocRef);
+      if (!snap.exists()) return;
 
-      const newClass = {
-        id: Date.now().toString(), // unique ID based on timestamp
-        title: classTitle,
-        description: classDescription,
-        startAge: classStartAge,
-        endAge: classEndAge,
-        price: Number(classPrice),
-        priceParam: classPriceParam,
-        startDate: classStartDate,
-        endDate: classEndDate,
-        style,
-        level,
-        active,
-        ageGroup,
-        classLink: classLink,
-        createdAt: new Date().toISOString(),
-      };
+      const all = snap.data().allClasses || [];
 
-      const updatedClasses = [newClass, ...currentClasses];
+      const updatedClasses = all.map((cls) => {
+        if (cls.id !== id) return cls;
 
-      await updateDoc(classesDocRef, {
-        allClasses: updatedClasses,
-      });
-
-      // Update local UI state
-      const classesData = updatedClasses.map((cls, idx) => {
-        const desc = cls.description || "";
         return {
-          id: cls.id || idx.toString(),
-          class: true,
-          title: cls.title,
-          blerb:
-            desc.split(" ").length > 17
-              ? desc.split(" ").slice(0, 17).join(" ") + "..."
-              : desc,
-          link: cls.link || "",
+          ...cls,
+          title: classTitle,
+          description: classDescription,
+          startAge: classStartAge,
+          endAge: classEndAge,
+          price: Number(classPrice),
+          priceParam: classPriceParam,
+          startDate: classStartDate,
+          endDate: classEndDate,
+          style,
+          level,
+          active,
+          ageGroup,
+          classLink,
+          updatedAt: new Date().toISOString(),
         };
       });
-      setCardArray(classesData);
 
-      // Reset form fields including new ones
-      setClassTitle("");
-      setClassDescription("");
-      setClassStartAge("");
-      setClassEndAge("");
-      setClassPrice("");
-      setClassPriceParam("");
-      setClassStartDate("");
-      setClassEndDate("");
-      setStyle("");
-      setLevel("");
-      setActive(false);
-      setAgeGroup("");
-      setClassLink("");
-
+      await updateDoc(classesDocRef, { allClasses: updatedClasses });
       setSuccess(true);
     } catch (err) {
-      console.error("Error adding class: ", err);
+      console.error("Error updating class: ", err);
     } finally {
       setLoading(false);
     }
   };
 
+  // -----------------------------------------------------
+  // ---------------------- JSX --------------------------
+  // -----------------------------------------------------
+
   return (
-    <section className="create-class-main" ref={wrapperRef}>
+    <section
+      className="create-class-main"
+      ref={wrapperRef}
+      style={{ opacity: 0 }} // <-- START HIDDEN
+    >
       <div className="back-arrow-container">
         <img
           src={arrow}
           className="back-arrow"
           onClick={() => {
-            navigate("/dashboard");
-            window.scrollTo(0, 0);
+            handleBack();
           }}
         />
       </div>
+
       <img className="create-class-bg" src={createClassBg} />
+
       <div className="create-class-title">
-        <h1 className="bebas-font">Add A Class</h1>
+        <h1 className="bebas-font">Edit {classTitle}</h1>
       </div>
 
       <div className="create-class-form-display-container">
+        {/* ------------- FORM ------------- */}
         <div className="create-class-form-container">
           <form className="create-class-form" onSubmit={handleSubmit}>
             <div className="class-form-img-container">
-              <img src={add} className="class-form-img" />
+              <img src={edit} className="class-form-img" />
             </div>
 
             <div className="form-title">
-              <h1 className="bebas-font">Create a Class</h1>
+              <h1 className="bebas-font">Edit Class</h1>
             </div>
 
             {success && (
@@ -198,15 +242,15 @@ export default function EditClass() {
                   marginBottom: "1rem",
                 }}
               >
-                ✅ Class added successfully!
+                ✅ Class updated successfully!
               </p>
             )}
 
+            {/* -------- TITLE -------- */}
             <div className="input-container">
               <label className="urban-font label">Class Title</label>
               <input
                 type="text"
-                placeholder="Enter Class Title"
                 className="input urban-thin-font"
                 value={classTitle}
                 onChange={(e) => {
@@ -217,11 +261,11 @@ export default function EditClass() {
               />
             </div>
 
+            {/* -------- DESCRIPTION -------- */}
             <div className="input-container">
               <label className="urban-font label">Description</label>
               <textarea
                 rows={10}
-                placeholder="Enter Description"
                 className="input urban-thin-font"
                 value={classDescription}
                 onChange={(e) => setClassDescription(e.target.value)}
@@ -229,11 +273,11 @@ export default function EditClass() {
               />
             </div>
 
+            {/* -------- PRICE -------- */}
             <div className="input-container">
               <label className="urban-font label">Price</label>
               <input
                 type="number"
-                placeholder="100"
                 className="input urban-thin-font"
                 value={classPrice}
                 onChange={(e) => setClassPrice(e.target.value)}
@@ -241,11 +285,7 @@ export default function EditClass() {
               />
 
               <div
-                style={{
-                  marginTop: "0.5rem",
-                  display: "flex",
-                  gap: "1rem",
-                }}
+                style={{ marginTop: "0.5rem", display: "flex", gap: "1rem" }}
               >
                 <label className="urban-thin-font">
                   <input
@@ -254,7 +294,6 @@ export default function EditClass() {
                     value="per Month"
                     checked={classPriceParam === "per Month"}
                     onChange={(e) => setClassPriceParam(e.target.value)}
-                    style={{ marginRight: "0.3rem" }}
                     required
                   />
                   Per Month
@@ -267,7 +306,6 @@ export default function EditClass() {
                     value="per Session"
                     checked={classPriceParam === "per Session"}
                     onChange={(e) => setClassPriceParam(e.target.value)}
-                    style={{ marginRight: "0.3rem" }}
                     required
                   />
                   Per Session
@@ -275,15 +313,10 @@ export default function EditClass() {
               </div>
             </div>
 
+            {/* -------- AGES -------- */}
             <div className="input-container">
               <label className="urban-font label">Ages</label>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "1rem",
-                  padding: "5px 0px",
-                }}
-              >
+              <div style={{ display: "flex", gap: "1rem" }}>
                 <div>
                   <label className="urban-thin-font">Start Age</label>
                   <input
@@ -307,15 +340,10 @@ export default function EditClass() {
               </div>
             </div>
 
+            {/* -------- SESSION DATES -------- */}
             <div className="input-container">
               <label className="urban-font label">Session Dates</label>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "1rem",
-                  padding: "5px 0px",
-                }}
-              >
+              <div style={{ display: "flex", gap: "1rem" }}>
                 <div>
                   <label className="urban-thin-font">Start Date</label>
                   <input
@@ -341,8 +369,7 @@ export default function EditClass() {
               </div>
             </div>
 
-            {/* New fields */}
-
+            {/* -------- STYLE -------- */}
             <div className="input-container">
               <label className="urban-font label">Style</label>
               <select
@@ -363,6 +390,7 @@ export default function EditClass() {
               </select>
             </div>
 
+            {/* -------- LEVEL -------- */}
             <div className="input-container">
               <label className="urban-font label">Level</label>
               <select
@@ -380,6 +408,7 @@ export default function EditClass() {
               </select>
             </div>
 
+            {/* -------- ACTIVE -------- */}
             <div
               className="input-container"
               style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
@@ -395,6 +424,7 @@ export default function EditClass() {
               </label>
             </div>
 
+            {/* -------- AGE GROUP -------- */}
             <div className="input-container">
               <label className="urban-font label">Age Group</label>
               <select
@@ -404,7 +434,7 @@ export default function EditClass() {
                 required
               >
                 <option value="" disabled>
-                  Select a age group
+                  Select an age group
                 </option>
                 <option value="Kids">Kids</option>
                 <option value="Teens">Teens</option>
@@ -412,11 +442,11 @@ export default function EditClass() {
               </select>
             </div>
 
+            {/* -------- LINK -------- */}
             <div className="input-container">
               <label className="urban-font label">Class Sign Up Link</label>
               <input
                 type="text"
-                placeholder="Enter Class Link"
                 className="input urban-thin-font"
                 value={classLink}
                 onChange={(e) => {
@@ -427,10 +457,12 @@ export default function EditClass() {
               />
             </div>
 
-            {loading ? <Loader /> : <Button text="Submit" />}
+            {/* -------- SUBMIT -------- */}
+            {loading ? <Loader /> : <Button text="Save Changes" />}
           </form>
         </div>
 
+        {/* ------------- PREVIEW & CURRENT CLASSES ------------- */}
         <div className="create-class-display-container">
           <div className="create-class-display">
             <h1 className="bebas-font blue-text">{classTitle || "Title"}</h1>
@@ -442,8 +474,8 @@ export default function EditClass() {
                 ? `$${classPrice} ${classPriceParam || ""}`
                 : "Price Per Session"}
             </p>
-            <p className="uban-thin-font">
-              {" "}
+
+            <p className="urban-thin-font">
               <b className="urban-font blue-text">Session:</b>{" "}
               {classPriceParam === "per Month"
                 ? "Monthly"
@@ -456,38 +488,37 @@ export default function EditClass() {
             </p>
 
             <p className="urban-thin-font">
-              <b className="urban-font blue-text">Style:</b>{" "}
-              {style === "" ? "--" : style}
+              <b className="urban-font blue-text">Style:</b> {style || "--"}
             </p>
             <p className="urban-thin-font">
-              <b className="urban-font blue-text">Level:</b>{" "}
-              {level === "" ? "--" : level}
+              <b className="urban-font blue-text">Level:</b> {level || "--"}
             </p>
             <p className="urban-thin-font">
               <b className="urban-font blue-text">Active:</b>{" "}
-              {active ? (active ? "Yes" : "No") : "--"}
+              {active ? "Yes" : "No"}
             </p>
             <p className="urban-thin-font">
               <b className="urban-font blue-text">Age Group:</b>{" "}
-              {ageGroup === "" ? "--" : ageGroup}
+              {ageGroup || "--"}
             </p>
           </div>
 
-          <h1 className="anton-font blue-text size">Current Classes</h1>
-          <div className="create-class-grid">
-            {cardArray.map((info, index) => (
-              <Card
-                isClass={info.class}
-                key={index}
-                title={info.title}
-                blerb={info.blerb}
-                link={info.link}
-                id={info.id}
-                onNav={handlePageLeave}
-                selectedId={selectedId}
-                setSelectedId={setSelectedId}
-              />
-            ))}
+          <h1 className="urban-thin-font yellow-text size underline">
+            Page Preview:
+          </h1>
+
+          <div className="display-column">
+            <SingleClass
+              isDisplay={true}
+              dStartAge={classStartAge}
+              dEndAge={classEndAge}
+              dTitle={classTitle}
+              dBlerb={classDescription}
+              dStyle={style}
+              dLevel={level}
+              dPrice={classPrice}
+              dPriceParam={classPriceParam}
+            />
           </div>
         </div>
       </div>

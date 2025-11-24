@@ -29,7 +29,9 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/createClass");
+          navigate("/createClass", {
+            state: { fromBack: false, targetId: null },
+          });
           window.scrollTo(0, 0);
         }}
       >
@@ -42,7 +44,9 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/editClasses");
+          navigate("/editClasses", {
+            state: { fromBack: false, targetId: null },
+          });
           window.scrollTo(0, 0);
         }}
       >
@@ -70,7 +74,9 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/editStyles");
+          navigate("/editStyles", {
+            state: { fromBack: false, targetId: null },
+          });
           window.scrollTo(0, 0);
         }}
       >
@@ -83,7 +89,9 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/editImg");
+          navigate("/editImg", {
+            state: { fromBack: false, targetId: null },
+          });
           window.scrollTo(0, 0);
         }}
       >

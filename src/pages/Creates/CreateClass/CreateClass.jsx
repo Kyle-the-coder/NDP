@@ -8,11 +8,16 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { db } from "../../../firebaseConfig";
 import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { Card } from "../../../components/Card/Card";
-import { useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  useNavigationType,
+  useOutletContext,
+} from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import { SelectedCardContext } from "../../../contexts/selectedCardContext";
 import gsap from "gsap";
 import { scrollToSection } from "../../../components/SmoothScroll";
+import { IsEditContext } from "../../../contexts/isEditContext";
 
 export default function CreateClass() {
   const [classTitle, setClassTitle] = useState("");
@@ -28,7 +33,9 @@ export default function CreateClass() {
   // Styles and Functionality for cards
   const { selectedId, setSelectedId } = useContext(SelectedCardContext);
   const wrapperRef = useRef(null);
-
+  const isEdit = useContext(IsEditContext);
+  const { backState } = useOutletContext();
+  const navigationType = useNavigationType();
   // New states for the added fields
   const [style, setStyle] = useState("");
   const [level, setLevel] = useState("");
@@ -55,7 +62,65 @@ export default function CreateClass() {
     });
   };
 
-  // Load existing classes from the allClasses array in the document
+  // Hide wrapper on mount
+  useEffect(() => {
+    if (wrapperRef.current) {
+      gsap.set(wrapperRef.current, { opacity: 0 });
+    }
+  }, []);
+
+  useEffect(() => {
+    // Must wait for data AND wrapperRef
+    if (!wrapperRef.current) return;
+
+    // If navigating normally (not back), just fade in normally
+    if (!backState?.fromBack || navigationType === "POP") {
+      gsap.to(wrapperRef.current, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+      return;
+    }
+
+    // If coming from BACK navigation...
+    if (cardArray.length === 0) return; // wait for data
+
+    const targetId = backState.targetId;
+    const el = document.getElementById(targetId);
+
+    if (!el) {
+      // No specific target — just fade in
+      gsap.to(wrapperRef.current, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+      return;
+    }
+
+    // Scroll instantly (wrapper still hidden)
+    el.scrollIntoView({ behavior: "instant", block: "center" });
+
+    // Fade in page wrapper
+    gsap.to(wrapperRef.current, {
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+
+    // Animate the target card separately
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+    );
+
+    // Clear state so refresh doesn’t repeat animation
+    navigate(window.location.pathname, { replace: true, state: {} });
+  }, [backState, navigationType, cardArray, navigate]);
+
+  // FETCH existing classes from the allClasses array in the document
   useEffect(() => {
     async function fetchClasses() {
       try {

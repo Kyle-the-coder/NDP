@@ -51,8 +51,6 @@ export default function CreateStyle() {
   // PNG upload progress states
   const [pngProgress, setPngProgress] = useState(0);
   const [pngUploading, setPngUploading] = useState(false);
-  console.log(backState);
-  console.log(navigationType);
 
   const navigate = useNavigate();
 
@@ -137,7 +135,6 @@ export default function CreateStyle() {
           const data = docSnap.data();
           const stylesData = (data.allStyles || []).map((cls, idx) => {
             const desc = cls.description || "";
-            console.log("desc", desc);
             return {
               id: cls.id || idx.toString(),
               class: true,
@@ -190,7 +187,6 @@ export default function CreateStyle() {
         const url = await getDownloadURL(uploadTask.snapshot.ref);
         setVideoLink(url);
         setUploading(false);
-        console.log("Uploaded VIDEO URL:", url);
       }
     );
   };
@@ -226,7 +222,6 @@ export default function CreateStyle() {
         const url = await getDownloadURL(uploadTask.snapshot.ref);
         setStylePng(url);
         setPngUploading(false);
-        console.log("Uploaded PNG URL:", url);
       }
     );
   };
@@ -303,7 +298,6 @@ export default function CreateStyle() {
       setLoading(false);
     }
   };
-  console.log(cardArray);
   return (
     <section className="create-style-main" ref={wrapperRef}>
       <div className="back-arrow-container">

@@ -9,6 +9,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { Card } from "../../../components/Card/Card";
 import { IsEditContext } from "../../../contexts/isEditContext";
 import { SelectedCardContext } from "../../../contexts/selectedCardContext";
+import { scrollToSection } from "../../../components/SmoothScroll";
 import arrow from "../../../assets/icons/functIcons/arrow.png";
 import gsap from "gsap";
 import "./editClasses.css";
@@ -153,7 +154,7 @@ export default function EditClasses() {
   }
 
   return (
-    <section className="edit-classes-main">
+    <section className="edit-classes-main" ref={wrapperRef}>
       <div className="back-arrow-container">
         <img
           src={arrow}

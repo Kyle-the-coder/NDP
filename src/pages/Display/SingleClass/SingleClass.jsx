@@ -8,7 +8,17 @@ import backArrow from "../../../assets/icons/functIcons/arrow.png";
 import gsap from "gsap";
 import "./singleclass.css";
 
-export default function SingleClass() {
+export default function SingleClass({
+  isDisplay = false,
+  dStartAge,
+  dEndAge,
+  dTitle,
+  dBlerb,
+  dStyle,
+  dLevel,
+  dPrice,
+  dPriceParam,
+}) {
   const { id } = useParams();
   const infoData = useContext(InfoContext);
   const wrapperRef = useRef(null);
@@ -58,44 +68,72 @@ export default function SingleClass() {
       ref={wrapperRef}
       style={{ opacity: 0 }}
     >
-      <img
-        src={backArrow}
-        onClick={handleBack}
-        style={{
-          width: "40px",
-          position: "absolute",
-          top: "4%",
-          left: "4%",
-          cursor: "pointer",
-        }}
-      />
+      {isDisplay ? (
+        <></>
+      ) : (
+        <img
+          src={backArrow}
+          onClick={handleBack}
+          style={{
+            width: "40px",
+            position: "absolute",
+            top: "4%",
+            left: "4%",
+            cursor: "pointer",
+          }}
+        />
+      )}
 
       <div className="single-class-z-index">
-        <h1 className="urban-thin-font blue-text">
-          Ages {classData.startAge}-{classData.endAge}
-        </h1>
+        {isDisplay ? (
+          <h1 className="urban-thin-font blue-text">
+            Ages {dStartAge}-{dEndAge}
+          </h1>
+        ) : (
+          <h1 className="urban-thin-font blue-text">
+            Ages {classData.startAge}-{classData.endAge}
+          </h1>
+        )}
 
-        <PageTitle title={classData.title} blerb={classData.description} />
+        {isDisplay ? (
+          <PageTitle title={dTitle} blerb={dBlerb} />
+        ) : (
+          <PageTitle title={classData.title} blerb={classData.description} />
+        )}
 
         <div className="single-class-details">
           <div className="single-block">
             <p className="bebas-font">
               <strong>Style:</strong>
             </p>
-            <p className="urban-thin-font">{classData.style}</p>
+            {isDisplay ? (
+              <p className="urban-thin-font">{dStyle}</p>
+            ) : (
+              <p className="urban-thin-font">{classData.style}</p>
+            )}
           </div>
 
           <div className="single-block">
             <p className="bebas-font">
               <strong>Level:</strong>
             </p>
-            <p className="urban-thin-font">{classData.level}</p>
+            {isDisplay ? (
+              <p className="urban-thin-font">{dLevel}</p>
+            ) : (
+              <p className="urban-thin-font">{classData.level}</p>
+            )}
           </div>
 
           <div className="single-block">
-            <p className="urban-thin-font" style={{ margin: "0 auto" }}>
-              ${classData.price} {classData.priceParam}
-            </p>
+            {isDisplay ? (
+              <p className="urban-thin-font" style={{ margin: "0 auto" }}>
+                ${dPrice} {dPriceParam}
+              </p>
+            ) : (
+              <p className="urban-thin-font" style={{ margin: "0 auto" }}>
+                ${classData.price} {classData.priceParam}
+              </p>
+            )}
           </div>
         </div>
 
