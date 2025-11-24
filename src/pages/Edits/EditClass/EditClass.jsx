@@ -38,10 +38,8 @@ export default function EditClass() {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [cardArray, setCardArray] = useState([]);
 
   // NEW: loading states
-  const [classesLoaded, setClassesLoaded] = useState(false);
   const [singleClassLoaded, setSingleClassLoaded] = useState(false);
   const [pageReady, setPageReady] = useState(false);
 
@@ -52,19 +50,6 @@ export default function EditClass() {
   const wrapperRef = useRef(null);
   const classesDocRef = doc(db, "ndp", "classes");
 
-  // -------- ANIMATION ON LEAVE --------
-  const handlePageLeave = (navigateCallback) => {
-    gsap.to(wrapperRef.current, {
-      opacity: 0,
-      duration: 1,
-      ease: "power2.in",
-      onComplete: () => {
-        scrollToSection("#nav");
-        setTimeout(() => navigateCallback(), 700);
-      },
-    });
-  };
-
   useEffect(() => {
     setIsEdit("/editClasses");
   }, []);
@@ -74,37 +59,6 @@ export default function EditClass() {
       ? navigate("/editClasses", { state: { fromBack: true, targetId: id } })
       : navigate("/dashboard", { state: { fromBack: true, targetId: id } });
   };
-
-  // -------- LOAD ALL CLASSES FOR PREVIEW CARDS --------
-  useEffect(() => {
-    async function fetchClasses() {
-      try {
-        const docSnap = await getDoc(classesDocRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const classesData = (data.allClasses || []).map((cls, idx) => {
-            const desc = cls.description || "";
-            return {
-              id: cls.id || idx.toString(),
-              class: true,
-              title: cls.title,
-              blerb:
-                desc.split(" ").length > 17
-                  ? desc.split(" ").slice(0, 17).join(" ") + "..."
-                  : desc,
-              link: cls.link || "",
-            };
-          });
-          setCardArray(classesData);
-        }
-      } catch (err) {
-        console.error("Error fetching classes: ", err);
-      } finally {
-        setClassesLoaded(true);
-      }
-    }
-    fetchClasses();
-  }, []);
 
   // -------- LOAD CLASS TO EDIT --------
   useEffect(() => {
@@ -143,7 +97,7 @@ export default function EditClass() {
 
   // -------- FADE IN WHEN EVERYTHING IS LOADED --------
   useEffect(() => {
-    if (classesLoaded && singleClassLoaded && wrapperRef.current) {
+    if (singleClassLoaded && wrapperRef.current) {
       gsap.to(wrapperRef.current, {
         opacity: 1,
         duration: 0.6,
@@ -151,7 +105,7 @@ export default function EditClass() {
       });
       setPageReady(true);
     }
-  }, [classesLoaded, singleClassLoaded]);
+  }, [singleClassLoaded]);
 
   // -------- UPDATE CLASS --------
   const handleSubmit = async (e) => {

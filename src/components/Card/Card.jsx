@@ -41,13 +41,15 @@ export function Card({
         );
       });
     } else {
-      navigate(
-        isEdit
-          ? `/editClass/${id}`
-          : isStyle
-          ? `/singleStyle/${id}`
-          : `/singleClass/${id}`
-      );
+      onNav(() => {
+        navigate(
+          isEdit
+            ? `/editClass/${id}`
+            : isStyle
+            ? `/singleStyle/${id}`
+            : `/singleClass/${id}`
+        );
+      });
     }
   };
 

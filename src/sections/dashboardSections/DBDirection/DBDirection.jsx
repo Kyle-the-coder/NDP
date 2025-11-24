@@ -2,14 +2,29 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
 import { Button } from "../../../components/Button/Button";
+import { useRef } from "react";
+import { scrollToSection } from "../../../components/SmoothScroll";
 import add from "../../../assets/icons/functIcons/add.png";
 import edit from "../../../assets/icons/functIcons/edit.png";
 import img from "../../../assets/icons/functIcons/img.png";
 import dance from "../../../assets/icons/functIcons/free-style.png";
+import gsap from "gsap";
 import "./dbdirection.css";
 
-export function DBDirection() {
+export function DBDirection({ wrapperRef }) {
   const navigate = useNavigate();
+
+  const handlePageLeave = (navigateCallback) => {
+    gsap.to(wrapperRef.current, {
+      opacity: 0,
+      duration: 1,
+      ease: "power2.in",
+      onComplete: () => {
+        scrollToSection("#nav");
+        setTimeout(() => navigateCallback(), 700);
+      },
+    });
+  };
 
   const handleLogout = async () => {
     try {
@@ -29,10 +44,12 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/createClass", {
-            state: { fromBack: false, targetId: null },
+          handlePageLeave(() => {
+            navigate("/createClass", {
+              state: { fromBack: false, targetId: null },
+            });
+            window.scrollTo(0, 0);
           });
-          window.scrollTo(0, 0);
         }}
       >
         <h1 className="urban-thin-font letter-space">
@@ -44,10 +61,12 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/editClasses", {
-            state: { fromBack: false, targetId: null },
+          handlePageLeave(() => {
+            navigate("/editClasses", {
+              state: { fromBack: false, targetId: null },
+            });
+            window.scrollTo(0, 0);
           });
-          window.scrollTo(0, 0);
         }}
       >
         <h1 className="urban-thin-font letter-space">
@@ -59,10 +78,12 @@ export function DBDirection() {
         className="db-direction-container "
         onClick={(e) => {
           e.preventDefault();
-          navigate("/createStyle", {
-            state: { fromBack: false, targetId: null },
+          handlePageLeave(() => {
+            navigate("/createStyle", {
+              state: { fromBack: false, targetId: null },
+            });
+            window.scrollTo(0, 0);
           });
-          window.scrollTo(0, 0);
         }}
       >
         <h1 className="urban-thin-font letter-space">

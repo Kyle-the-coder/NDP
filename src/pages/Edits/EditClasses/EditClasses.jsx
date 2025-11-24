@@ -18,6 +18,7 @@ export default function EditClasses() {
   const [cardArray, setCardArray] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const classesDocRef = doc(db, "ndp", "classes");
   const navigate = useNavigate();
@@ -47,56 +48,38 @@ export default function EditClasses() {
     }
   }, []);
 
+  const hasFadedIn = useRef(false);
   useEffect(() => {
-    // Must wait for data AND wrapperRef
-    if (!wrapperRef.current) return;
+    if (!wrapperRef.current || !dataLoaded || hasFadedIn.current) return;
+    console.log(backState);
+    console.log(navigationType);
+    console.log(cardArray.length);
+    // Fade in wrapper
+    const tl = gsap.timeline();
+    tl.set(wrapperRef.current, { opacity: 0 });
 
-    // If navigating normally (not back), just fade in normally
     if (!backState?.fromBack || navigationType === "POP") {
-      gsap.to(wrapperRef.current, {
+      tl.to(wrapperRef.current, {
         opacity: 1,
         duration: 0.6,
         ease: "power2.out",
       });
-      return;
+    } else if (cardArray.length > 0) {
+      const targetId = backState.targetId;
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: "instant", block: "center" });
+        tl.to(wrapperRef.current, {
+          opacity: 1,
+          duration: 0.4,
+          ease: "power2.out",
+        });
+        navigate(window.location.pathname, { replace: true, state: {} });
+      }
     }
 
-    // If coming from BACK navigation...
-    if (cardArray.length === 0) return; // wait for data
-
-    const targetId = backState.targetId;
-    const el = document.getElementById(targetId);
-
-    if (!el) {
-      // No specific target — just fade in
-      gsap.to(wrapperRef.current, {
-        opacity: 1,
-        duration: 0.6,
-        ease: "power2.out",
-      });
-      return;
-    }
-
-    // Scroll instantly (wrapper still hidden)
-    el.scrollIntoView({ behavior: "instant", block: "center" });
-
-    // Fade in page wrapper
-    gsap.to(wrapperRef.current, {
-      opacity: 1,
-      duration: 0.4,
-      ease: "power2.out",
-    });
-
-    // Animate the target card separately
-    gsap.fromTo(
-      el,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
-    );
-
-    // Clear state so refresh doesn’t repeat animation
-    navigate(window.location.pathname, { replace: true, state: {} });
-  }, [backState, navigationType, cardArray, navigate]);
+    hasFadedIn.current = true;
+  }, [backState, navigationType, cardArray, dataLoaded, navigate]);
 
   useEffect(() => {
     fetchClasses();
@@ -126,6 +109,8 @@ export default function EditClasses() {
       }
     } catch (err) {
       console.error("Error fetching classes: ", err);
+    } finally {
+      setDataLoaded(true);
     }
   }
 

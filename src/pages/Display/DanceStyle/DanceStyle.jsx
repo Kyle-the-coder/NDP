@@ -12,7 +12,6 @@ export default function DanceStyle() {
   const navigate = useNavigate();
   const infoData = useContext(InfoContext);
   const isEdit = useContext(IsEditContext);
-  console.log(isEdit, "style");
 
   const wrapperRef = useRef(null);
   const videoRef = useRef(null);
