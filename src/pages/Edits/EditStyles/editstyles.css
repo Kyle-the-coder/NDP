@@ -1,4 +1,4 @@
-.edit-styles-main {
+.edit-classes-main {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,14 +8,21 @@
   position: relative;
 }
 
+.edit-bg {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .back-arrow-container {
   width: 50px;
-  height: 50px;
+  height: 60px;
   position: absolute;
-  top: 10px;
+  top: 50px;
   left: 10px;
   z-index: 4;
-  background-color: whitesmoke;
   border-radius: 0.5rem;
   cursor: pointer;
   display: flex;
@@ -27,137 +34,19 @@
   height: 85%;
 }
 
-.edit-styles-title {
+.edit-class-title {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 3;
 }
-.edit-styles-title > h1 {
+.edit-class-title > h1 {
   font-size: clamp(3rem, 4vw, 5rem);
 }
 
-.edit-styles-form-display-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  z-index: 3;
-}
-
-.edit-styles-form-container {
-  width: 30%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 100px 0px;
-}
-
-.edit-styles-form {
-  width: 100%;
-  background-color: whitesmoke;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 20px 10px;
-  border-radius: 0.5rem;
-  color: black;
-}
-
-.styles-form-img {
-  width: 100%;
-}
-
-.styles-form-img-container {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgb(9, 48, 117);
-  padding: 10px;
-  border-radius: 50%;
-  border: 5px solid whitesmoke;
-}
-
-.form-title {
-  width: 100%;
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.form-title > h1 {
-  font-size: clamp(2rem, 3vw, 4rem);
-}
-
-.input-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 5px;
-  margin-bottom: 30px;
-}
-
-.input {
-  padding: 10px 5px;
-  border-radius: 0.5rem;
-  border: 3px solid rgba(191, 191, 191, 0.619);
-  width: 100%;
-}
-
-.label {
-  font-size: 1.2rem;
-}
-
-.edit-styles-display-container {
-  width: 70%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 100px 0px;
-  gap: 30px;
-}
-
-.edit-styles-display {
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  background-color: var(--dark-blue);
-  border: 3px solid var(--neon-blue);
-  padding: 50px;
-  border-radius: 0.5rem;
-  gap: 20px;
-}
-
-.edit-styles-display > h1 {
-  font-size: clamp(2rem, 3vw, 4rem);
-}
-.edit-styles-display > p {
-  font-size: clamp(1.3rem, 2vw, 1.5rem);
-}
-
-.size {
-  font-size: clamp(2rem, 3vw, 4rem);
-  margin-top: 20px;
-}
-
-.edit-styles-grid {
+.edit-class-grid {
   margin-top: 50px;
   margin-bottom: 50px;
   width: 90%;
@@ -165,35 +54,59 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 50px;
   justify-items: center;
+  z-index: 3;
 }
 
-/* PHONE */
-@media only screen and (max-width: 900px) {
-  .edit-styles-main {
-    padding: 50px 20px;
-  }
-  .edit-styles-form-display-container {
-    flex-direction: column;
-  }
-  .edit-styles-form-container {
-    width: 100%;
-    padding: 100px 0px 30px 0px;
-  }
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
 
-  .edit-styles-display-container {
-    padding: 50px 0px 0px 0px;
-    width: 100%;
-  }
+.confirm-box {
+  background-color: var(--dark-blue);
+  border: 3px solid var(--neon-blue);
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
 
-  .edit-styles-display {
-    width: 100%;
-  }
+.confirm-box > h2 {
+  font-size: 2rem;
+}
+.confirm-box > p {
+  font-size: 1.5rem;
+}
 
-  .edit-styles-grid {
-    width: 100%;
-  }
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
 
-  .back-arrow-container {
-    top: 0;
-  }
+.btn-cancel {
+  background: #ccc;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+.btn-delete {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
 }
