@@ -21,6 +21,8 @@ export function Card({
 }) {
   const navigate = useNavigate();
   const isSelected = selectedId === id; // determine if this card is selected
+  const shortBlerb =
+    blerb && blerb.length > 90 ? blerb.substring(0, 90) + "..." : blerb;
 
   useEffect(() => {
     editor && editor.setIsEdit(editLink);
@@ -34,7 +36,9 @@ export function Card({
       onNav(() => {
         navigate(
           isEdit
-            ? `/editClass/${id}`
+            ? isStyle
+              ? `/editStyle/${id}`
+              : `/editClass/${id}`
             : isStyle
             ? `/singleStyle/${id}`
             : `/singleClass/${id}`
@@ -86,7 +90,7 @@ export function Card({
       </div>
 
       <div className="card-mid">
-        <p className="urban-thin-font">{blerb}</p>
+        <p className="urban-thin-font">{shortBlerb}</p>
       </div>
 
       <div className="card-bottom">

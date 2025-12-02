@@ -34,6 +34,20 @@
   margin-bottom: 120px;
 }
 
+.page-title-blerb-la {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 20px;
+  border-radius: 0.5rem;
+  color: black;
+  border: 2px solid var(--neon-blue);
+  background-color: rgb(231, 231, 231);
+}
+
 .page-title-blerb {
   width: 100%;
   display: flex;
@@ -44,7 +58,12 @@
 }
 
 .page-title-blerb > p {
-  font-size: clamp(2rem, 3vw, 5rem);
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.5;
+}
+.page-title-blerb-la > p {
+  font-size: clamp(1.5rem, 1.7vw, 2rem);
+  line-height: 1.5;
 }
 
 /* BIG SCREEN */

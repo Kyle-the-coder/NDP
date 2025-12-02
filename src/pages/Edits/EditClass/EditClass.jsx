@@ -3,18 +3,20 @@ import { Loader } from "../../../components/Loader/Loader";
 import { useContext, useEffect, useRef, useState } from "react";
 import { db } from "../../../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { Card } from "../../../components/Card/Card";
 import { useNavigate, useParams } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import { SelectedCardContext } from "../../../contexts/selectedCardContext";
-import { IsEditContext } from "../../../contexts/isEditContext";
+import { scrollToSection } from "../../../components/SmoothScroll";
 import createClassBg from "../../../assets/decor/imgs/NDPAboutBg.png";
 import edit from "../../../assets/icons/functIcons/edit.png";
 import arrow from "../../../assets/icons/functIcons/arrow.png";
 import gsap from "gsap";
-import SingleClass from "../../Display/SingleClass/SingleClass";
+import { IsEditContext } from "../../../contexts/isEditContext";
 import "./editclass.css";
+import SingleClass from "../../Display/SingleClass/SingleClass";
 
-export default function EditStyle() {
+export default function EditClass() {
   // -------- ROUTER PARAM --------
   const { id } = useParams();
 

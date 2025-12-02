@@ -12,6 +12,9 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
+  server: {
+    port: 5175, // change to whatever you want
+  },
   build: {
     rollupOptions: {
       output: {

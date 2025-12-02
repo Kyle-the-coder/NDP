@@ -73,7 +73,11 @@ export default function DanceStyle() {
       />
 
       <div className="dance-style-z-index">
-        <PageTitle title={styleData.title} blerb={styleData.description} />
+        <PageTitle
+          title={styleData.title}
+          blerb={styleData.description}
+          leftAlign
+        />
 
         <video
           ref={videoRef}

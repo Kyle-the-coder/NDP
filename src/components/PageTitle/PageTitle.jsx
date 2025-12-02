@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./pagetitle.css";
 
-export function PageTitle({ title, blerb }) {
+export function PageTitle({ title, blerb, leftAlign = false }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -10,6 +10,7 @@ export function PageTitle({ title, blerb }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  console.log(leftAlign);
   const titleWords = title.split(" ");
   const isExplore = titleWords[0]?.toLowerCase() === "explore";
   return (
@@ -31,8 +32,14 @@ export function PageTitle({ title, blerb }) {
               className={`light-blue-line ${isExplore ? "title-mb" : ""}`}
             ></div>
           </div>
-          <div className="page-title-blerb">
-            <p className="urban-thin-font letter-space">{blerb}</p>
+          <div
+            className={` ${
+              leftAlign ? "page-title-blerb-la" : "page-title-blerb"
+            }`}
+          >
+            <p className={`${leftAlign ? "anton-font" : "urban-thin-font"}`}>
+              {blerb}
+            </p>
           </div>
         </>
       ) : (
@@ -42,8 +49,14 @@ export function PageTitle({ title, blerb }) {
             <h1 className="bebas-font blue-text ">{title}</h1>
             <div className="light-blue-line"></div>
           </div>
-          <div className="page-title-blerb">
-            <p className="urban-thin-font letter-space">{blerb}</p>
+          <div
+            className={` ${
+              leftAlign ? "page-title-blerb-la" : "page-title-blerb"
+            }`}
+          >
+            <p className={`${leftAlign ? "anton-font" : "urban-thin-font"}`}>
+              {blerb}
+            </p>
           </div>
         </>
       )}
