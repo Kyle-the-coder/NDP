@@ -88,7 +88,6 @@ export default function EditStyles() {
       const docSnap = await getDoc(classesDocRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        console.log("data", data);
         const classesData = (data.allStyles || []).map((cls, idx) => {
           const desc = cls.description || "";
           return {
@@ -136,7 +135,6 @@ export default function EditStyles() {
     setClassToDelete(classItem);
     setShowConfirm(true);
   }
-  console.log(cardArray);
   return (
     <section className="edit-classes-main" ref={wrapperRef}>
       <div className="back-arrow-container">
